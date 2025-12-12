@@ -42,11 +42,10 @@ export default function Home() {
                 {/* Hero Section */}
                 <section ref={heroRef} className="text-center py-20">
                     <h1 className="text-6xl font-bold mb-6">
-                        Bienvenido a mi Portafolio
+                        Salesman - Project Portfolio
                     </h1>
                     <p className="text-lg text-gray-600 max-w-xl mx-auto">
-                        Aquí encontrarás mis proyectos más recientes, con animaciones
-                        fluidas y diseño minimalista.
+                        Explora mis proyectos y trabajos destacados y desarrollo. Menti, son los proyectos del precioso del diego.
                     </p>
                 </section>
 
