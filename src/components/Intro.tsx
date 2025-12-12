@@ -12,8 +12,11 @@ export default function Intro({ onFinish }: IntroProps) {
   const logoRef = useRef<HTMLImageElement | null>(null); // ahora tipamos directamente como imagen
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  useEffect(() => {
-    if (!containerRef.current || !logoRef.current) return;
+   useEffect(() => {
+    const container = containerRef.current;
+    const logo = logoRef.current;
+
+    if (!container || !logo) return;
 
     if (prefersReducedMotion) {
       onFinish();
@@ -22,20 +25,22 @@ export default function Intro({ onFinish }: IntroProps) {
 
     const tl = gsap.timeline({
       defaults: { ease: 'power3.out' },
-      onComplete: onFinish,
     });
 
     tl.fromTo(
-      logoRef.current,
+      logo,
       { opacity: 0, scale: 0.9, y: 10 },
       { opacity: 1, scale: 1, y: 0, duration: 0.8 }
     )
-      .to(logoRef.current, { scale: 1.05, duration: 0.5 })
-      .to(containerRef.current, { opacity: 0, duration: 0.6 }, '>-0.1');
+      .to(logo, { scale: 1.05, duration: 0.5 })
+      .to(container, { opacity: 0, duration: 0.6 })
+      .add(() => {
+        //onFinish SOLO cuando la animación terminó
+        onFinish();
+      });
 
     return () => {
-      tl.kill();
-      gsap.set([logoRef.current, containerRef.current], { clearProps: 'all' });
+      if (tl) tl.kill();
     };
   }, [onFinish, prefersReducedMotion]);
 
