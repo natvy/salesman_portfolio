@@ -1,20 +1,32 @@
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-export default function AnimatedHeader({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const ref = useRef<HTMLHeadingElement | null>(null);
+gsap.registerPlugin(ScrollTrigger);
+
+export default function AnimatedHeader() {
+  const headerRef = useRef(null);
+
   useEffect(() => {
-    if (!ref.current) return;
     gsap.fromTo(
-      ref.current,
-      { y: 20, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
+      headerRef.current,
+      { opacity: 0, y: -50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: headerRef.current,
+          start: 'top 80%',
+        },
+      }
     );
   }, []);
 
-  return <h1 ref={ref}>{children}</h1>;
+  return (
+    <h1 ref={headerRef} className="text-5xl font-bold text-center">
+      Mi Portafolio
+    </h1>
+  );
 }
