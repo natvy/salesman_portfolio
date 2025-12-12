@@ -47,7 +47,7 @@ export default function Intro({ onFinish }: IntroProps) {
     >
       <img
         ref={logoRef}
-        src="/logo.gif"
+        src="/logo.png"
         alt="Logo de inicio"
         className="w-40 h-40"
       />

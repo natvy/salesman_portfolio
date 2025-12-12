@@ -33,7 +33,6 @@ export default function Home() {
       );
     }
 
-    // ✅ La función de limpieza debe devolver void
     return () => {
       tl.kill(); // mata la animación
     };
@@ -48,11 +47,10 @@ export default function Home() {
         {/* Hero */}
         <section ref={heroRef} className="mx-auto max-w-4xl text-center py-16">
           <h1 className="text-5xl font-bold mb-4">
-            Bienvenido a mi Portafolio
+            Salesman - Portfolio
           </h1>
           <p className="text-lg text-gray-700">
-            Proyectos seleccionados con enfoque en diseño, arquitectura y
-            experiencias fluidas.
+            Proyectos del lindote del diego
           </p>
         </section>
 
