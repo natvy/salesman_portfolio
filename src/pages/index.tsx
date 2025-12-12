@@ -1,79 +1,94 @@
-import { useEffect, useRef } from "react";
+// src/pages/index.tsx
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Link from "next/link";
 import Layout from "../components/Layout";
-
-gsap.registerPlugin(ScrollTrigger);
+import Intro from "../components/Intro";
+import Navbar from "../components/Navbar";
+import Link from "next/link";
 
 export default function Home() {
-    const heroRef = useRef(null);
-    const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const [introDone, setIntroDone] = useState(false);
+  const heroRef = useRef<HTMLDivElement | null>(null);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-    useEffect(() => {
-        // Animación del Hero
-        gsap.fromTo(
-            heroRef.current,
-            { opacity: 0, y: -80 },
-            { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" }
-        );
+  useEffect(() => {
+    if (!introDone) return;
 
-        // Animación de las tarjetas con efecto stagger
-        gsap.fromTo(
-            cardsRef.current,
-            { opacity: 0, y: 50 },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                stagger: 0.2,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: cardsRef.current,
-                    start: "top 80%",
-                },
-            }
-        );
-    }, []);
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-    return (
-        <Layout>
-            <main className="flex flex-col items-center justify-center min-h-screen px-6">
-                {/* Hero Section */}
-                <section ref={heroRef} className="text-center py-20">
-                    <h1 className="text-6xl font-bold mb-6">
-                        Salesman - Project Portfolio
-                    </h1>
-                    <p className="text-lg text-gray-600 max-w-xl mx-auto">
-                        Explora mis proyectos y trabajos destacados y desarrollo. Menti, son los proyectos del precioso del diego.
-                    </p>
-                </section>
+    if (heroRef.current) {
+      tl.fromTo(
+        heroRef.current,
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.8 }
+      );
+    }
 
-                {/* Projects Section */}
-                <section className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full max-w-6xl">
-                    {[1, 2, 3].map((num, i) => (
-                        <div
-                            key={i}
-                            ref={(el) => {
-                                cardsRef.current[i] = el;
-                            }}
-                            className="border rounded-lg p-6 shadow-lg hover:shadow-2xl transition-transform transform hover:-translate-y-2 bg-white"
-                        >
-                            <img src={`/proyecto${num}.jpg`} alt={`Proyecto ${num}`} className="rounded-md mb-4" />
-                            <h2 className="text-xl font-semibold">Proyecto {num}</h2>
-                            <p className="text-gray-600">Descripción breve del proyecto {num}.</p>
-                            <Link href={`/proyecto${num}`} className="text-blue-500 hover:underline">
-                                Ver más →
-                            </Link>
-                        </div>
-                    ))}
-                </section>
+    if (cardsRef.current.length) {
+      tl.fromTo(
+        cardsRef.current,
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.15 },
+        "-=0.2"
+      );
+    }
 
-                {/* Footer */}
-                <footer className="w-full py-6 text-center text-gray-500 mt-20">
-                    © 2025 Mi Portafolio — Contacto: email@ejemplo.com
-                </footer>
-            </main>
-        </Layout>
-    );
+    // ✅ La función de limpieza debe devolver void
+    return () => {
+      tl.kill(); // mata la animación
+    };
+  }, [introDone]);
+
+  return (
+    <Layout>
+      {!introDone && <Intro onFinish={() => setIntroDone(true)} />}
+      {introDone && <Navbar />}
+
+      <main className="min-h-screen px-6 pt-20">
+        {/* Hero */}
+        <section ref={heroRef} className="mx-auto max-w-4xl text-center py-16">
+          <h1 className="text-5xl font-bold mb-4">
+            Bienvenido a mi Portafolio
+          </h1>
+          <p className="text-lg text-gray-700">
+            Proyectos seleccionados con enfoque en diseño, arquitectura y
+            experiencias fluidas.
+          </p>
+        </section>
+
+        {/* Grid de proyectos */}
+        <section className="mx-auto max-w-6xl grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {[1, 2, 3].map((num, i) => (
+            <div
+              key={i}
+              ref={(el) => {
+                cardsRef.current[i] = el;
+              }}
+              className="border rounded-lg p-6 shadow-lg hover:shadow-2xl transition-transform transform hover:-translate-y-2 bg-white"
+            >
+              <img
+                src={`/proyecto${num}.jpg`}
+                alt={`Proyecto ${num}`}
+                className="rounded-md mb-4"
+              />
+              <h2 className="text-xl font-semibold">Proyecto {num}</h2>
+              <p className="text-gray-600">
+                Descripción breve del proyecto {num}.
+              </p>
+              <Link
+                href={`/proyecto${num}`}
+                className="text-blue-600 hover:underline"
+              >
+                Ver más →
+              </Link>
+            </div>
+          ))}
+        </section>
+
+        <footer className="w-full py-10 text-center text-gray-500">
+          © 2025 Salesman. Todos los derechos reservados.
+        </footer>
+      </main>
+    </Layout>
+  );
 }

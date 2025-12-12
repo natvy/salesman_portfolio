@@ -1,27 +1,18 @@
+// src/lib/usePrefersReducedMotion.ts
 import { useEffect, useState } from 'react';
 
 export function usePrefersReducedMotion() {
-  const [reduce, setReduce] = useState(false);
+  const [prefers, setPrefers] = useState(false);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-    // Establecemos el estado inicial fuera del render inmediato
-    const update = () => setReduce(mq.matches);
-
-    // Llamamos la función una sola vez ya dentro del efecto
-    update();
-
-    // Suscribimos al evento de cambio
-    mq.addEventListener('change', update);
-
-    return () => {
-      mq.removeEventListener('change', update);
-    };
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handler = () => setPrefers(mediaQuery.matches);
+    handler();
+    mediaQuery.addEventListener?.('change', handler);
+    return () => mediaQuery.removeEventListener?.('change', handler);
   }, []);
 
-  return reduce;
+  return prefers;
 }
+
 
