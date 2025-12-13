@@ -1,7 +1,7 @@
 // src/components/Intro.tsx
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { usePrefersReducedMotion } from '../lib/usePrefersReducedMotion';
+import { useEffect, useRef } from "react";
+import gsap, { Power3 } from "gsap";
+import { usePrefersReducedMotion } from "../lib/usePrefersReducedMotion";
 
 type IntroProps = {
   onFinish: () => void;
@@ -9,14 +9,16 @@ type IntroProps = {
 
 export default function Intro({ onFinish }: IntroProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const logoRef = useRef<HTMLImageElement | null>(null); // ahora tipamos directamente como imagen
+  const logoRef = useRef<HTMLImageElement | null>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
 
-   useEffect(() => {
+  useEffect(() => {
     const container = containerRef.current;
     const logo = logoRef.current;
 
-    if (!container || !logo) return;
+    if (!container || !logo) {
+      return;
+    }
 
     if (prefersReducedMotion) {
       onFinish();
@@ -24,23 +26,22 @@ export default function Intro({ onFinish }: IntroProps) {
     }
 
     const tl = gsap.timeline({
-      defaults: { ease: 'power3.out' },
+      defaults: { ease: Power3.easeOut },
     });
 
     tl.fromTo(
       logo,
-      { opacity: 0, scale: 0.9, y: 10 },
-      { opacity: 1, scale: 1, y: 0, duration: 0.8 }
+      { opacity: 0, scale: 0.9 },
+      { opacity: 1, scale: 1, duration: 0.8 }
     )
-      .to(logo, { scale: 1.05, duration: 0.5 })
-      .to(container, { opacity: 0, duration: 0.6 })
+      .to(logo, { scale: 1.05, duration: 0.4 })
+      .to(container, { opacity: 0, duration: 0.5 })
       .add(() => {
-        //onFinish SOLO cuando la animación terminó
         onFinish();
       });
 
     return () => {
-      if (tl) tl.kill();
+      tl.kill();
     };
   }, [onFinish, prefersReducedMotion]);
 
@@ -48,7 +49,6 @@ export default function Intro({ onFinish }: IntroProps) {
     <div
       ref={containerRef}
       className="fixed inset-0 z-50 flex items-center justify-center bg-white"
-      aria-hidden="true"
     >
       <img
         ref={logoRef}
@@ -59,3 +59,4 @@ export default function Intro({ onFinish }: IntroProps) {
     </div>
   );
 }
+
