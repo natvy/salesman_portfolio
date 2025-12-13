@@ -25,6 +25,7 @@ export default function Navbar() {
         <img id="navbar-logo" src="/logo.gif" alt="Logo" className="h-10 w-auto" />
 
 
+
         {/* Links */}
         <nav className="flex gap-8 text-gray-700 font-medium">
           <a href="/Home" className="hover:text-black transition-colors">Home</a>
