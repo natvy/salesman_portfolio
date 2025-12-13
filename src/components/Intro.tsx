@@ -15,12 +15,10 @@ export default function Intro({ onFinish }: IntroProps) {
   useEffect(() => {
     const container = containerRef.current;
     const logo = logoRef.current;
-    const navbarLogo = document.getElementById("navbar-logo");
 
-    if (!container || !logo || !navbarLogo) {
+    if (!container || !logo) {
       return;
     }
-
 
     if (prefersReducedMotion) {
       onFinish();
@@ -31,28 +29,18 @@ export default function Intro({ onFinish }: IntroProps) {
       defaults: { ease: Power3.easeOut },
     });
 
-    //aparece en el centro
-
     tl.fromTo(
       logo,
       { opacity: 0, scale: 0.9 },
       { opacity: 1, scale: 1, duration: 0.8 }
-    );
+    )
+      .to(logo, { scale: 1.05, duration: 0.4 })
+      .to(container, { opacity: 0, duration: 0.5 })
+      .add(() => {
+        onFinish();
+      });
 
-    // 2. Se mueve hacia el logo del navbar
-    tl.to(logo, {
-      duration: 0.8,
-      scale: 0.5,
-      x: navbarLogo.getBoundingClientRect().left - window.innerWidth / 2 + 40,
-      y: navbarLogo.getBoundingClientRect().top - window.innerHeight / 2 + 20,
-    });
-
-    // 3. Desvanece el fondo blanco
-    tl.to(container, { opacity: 0, duration: 0.5 });
-
-    // 4. Termina
-    tl.add(() => onFinish());
-
+    // 👇 aquí el cleanup es SIEMPRE una función que devuelve void
     return () => {
       tl.kill();
     };
@@ -65,11 +53,10 @@ export default function Intro({ onFinish }: IntroProps) {
     >
       <img
         ref={logoRef}
-        src="/logo.png"
-        alt="Logo"
+        src="/logo.gif"
+        alt="Logo de inicio"
         className="w-40 h-40"
       />
     </div>
   );
 }
-
