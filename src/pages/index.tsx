@@ -40,22 +40,30 @@ export default function Home() {
 
   return (
     <Layout>
-      <Intro onFinish={() => setIntroDone(true)} />
-      <Navbar visible={introDone} />
+      {/* Intro siempre arriba y bloqueando */}
+      {!introDone && <Intro onFinish={() => setIntroDone(true)} />}
 
-      <main className="min-h-screen px-6 pt-20">
+      {/* Navbar solo aparece después */}
+      {introDone && <Navbar/>}
+
+      {/* CONTENIDO: invisible hasta que intro termine */}
+      <main
+        className={`min-h-screen px-6 pt-20 transition-opacity duration-300 ${
+          introDone ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        {/* Hero */}
         <section
           ref={heroRef}
           className="mx-auto max-w-4xl text-center py-16 opacity-0"
         >
-          <h1 className="text-5xl font-bold mb-4">
-            Salesman - Portfolio
-          </h1>
+          <h1 className="text-5xl font-bold mb-4">Salesman - Portfolio</h1>
           <p className="text-lg text-gray-700">
             Proyectos del lindote del Diego
           </p>
         </section>
 
+        {/* Grid de proyectos */}
         <section className="mx-auto max-w-6xl grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {[1, 2, 3].map((num, i) => (
             <div

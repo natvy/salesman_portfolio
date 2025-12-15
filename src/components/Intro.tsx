@@ -20,11 +20,11 @@ export default function Intro({ onFinish }: IntroProps) {
       defaults: { ease: "power2.out" },
     });
 
-    tl.fromTo(
-      logo,
-      { opacity: 0, scale: 0.95 },
-      { opacity: 1, scale: 1, duration: 0.6 }
-    )
+    tl.to(logo, {
+      opacity: 1,
+      scale: 1,
+      duration: 0.8,
+    })
       .to(logo, {
         y: -40,
         duration: 0.6,
@@ -49,7 +49,7 @@ export default function Intro({ onFinish }: IntroProps) {
         ref={logoRef}
         src="/logo.png"
         alt="Logo de inicio"
-        className="w-40 h-40"
+        className="w-40 h-40 opacity-0"
       />
     </div>
   );
