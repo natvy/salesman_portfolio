@@ -1,16 +1,17 @@
-// src/components/Layout.tsx
-import { ReactNode } from 'react';
+import Navbar from "@/components/Navbar";
+import React from "react";
 
-type Props = { children: ReactNode };
+type LayoutProps = {
+  children: React.ReactNode;
+};
 
-export default function Layout({ children }: Props) {
+const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
-      {/* Sin header; Navbar es fixed y está en la página */}
-      <main className="flex-1">{children}</main>
-      
+    <div>
+      <Navbar />
+      <main>{children}</main>
     </div>
   );
-}
+};
 
-
+export default Layout;

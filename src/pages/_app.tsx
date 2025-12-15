@@ -1,13 +1,10 @@
-// src/pages/_app.tsx
+import Layout from "@/components/Layout";
 import type { AppProps } from "next/app";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import "../styles/globals.css"; // ajusta la ruta si tu archivo global está en otro lado
 
-function MyApp({ Component, pageProps }: AppProps) {
-  const router = useRouter();
-
-  return <Component {...pageProps} />;
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  );
 }
-
-export default MyApp;
