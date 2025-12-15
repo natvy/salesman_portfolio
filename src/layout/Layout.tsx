@@ -5,13 +5,11 @@ type LayoutProps = {
   children: React.ReactNode;
 };
 
-const Layout = ({ children }: LayoutProps) => {
+export default function Layout({ children }: LayoutProps) {
   return (
     <div>
-      <Navbar />
-      <main>{children}</main>
+      <Navbar visible={true} />
+      <main className="pt-20">{children}</main>
     </div>
   );
-};
-
-export default Layout;
+}

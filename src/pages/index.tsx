@@ -1,6 +1,6 @@
 // src/pages/index.tsx
 import { useRef } from "react";
-import Layout from "../components/Layout";
+import Layout from "../layout/Layout";
 import Navbar from "../components/Navbar";
 import Link from "next/link";
 
