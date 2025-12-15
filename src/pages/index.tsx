@@ -80,6 +80,10 @@ export default function Home() {
           ))}
         </section>
 
+        <footer className="w-full py-10 text-center text-gray-500">
+          © 2025 tuperrmadre. Todos los derechos reservados.
+        </footer>
+
         
       </main>
     </Layout>
