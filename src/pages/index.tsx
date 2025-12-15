@@ -1,4 +1,3 @@
-// src/pages/index.tsx
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import Layout from "../components/Layout";
@@ -12,6 +11,7 @@ export default function Home() {
   useEffect(() => {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
+    // Animación del hero
     if (heroRef.current) {
       tl.fromTo(
         heroRef.current,
@@ -20,6 +20,7 @@ export default function Home() {
       );
     }
 
+    // Animación de tarjetas
     if (cardsRef.current.length) {
       tl.fromTo(
         cardsRef.current,
@@ -30,17 +31,20 @@ export default function Home() {
     }
 
     return () => {
-      tl.kill(); //Devuelve void
+      tl.kill();
     };
   }, []);
 
   return (
     <Layout>
-      <Navbar />
+      <Navbar visible={true} />
 
       <main className="min-h-screen px-6 pt-20">
         {/* Hero */}
-        <section ref={heroRef} className="mx-auto max-w-4xl text-center py-16">
+        <section
+          ref={heroRef}
+          className="mx-auto max-w-4xl text-center py-16 opacity-0"
+        >
           <h1 className="text-5xl font-bold mb-4">Salesman - Portfolio</h1>
           <p className="text-lg text-gray-700">
             Proyectos del lindote del Diego
@@ -54,7 +58,7 @@ export default function Home() {
               key={i}
               ref={(el) => {
                 cardsRef.current[i] = el;
-              }} // sin return
+              }}
               className="opacity-0 border rounded-lg p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white"
             >
               <img
