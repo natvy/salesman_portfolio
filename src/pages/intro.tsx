@@ -1,32 +1,59 @@
-// src/pages/intro.tsx
 import { useEffect, useRef } from "react";
-import { useRouter } from "next/router";
 import gsap from "gsap";
+import { useRouter } from "next/router";
 
 export default function IntroPage() {
-  const logoRef = useRef<HTMLImageElement | null>(null);
   const router = useRouter();
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const logoRef = useRef<HTMLImageElement | null>(null);
 
   useEffect(() => {
-    if (!logoRef.current) return;
+    const container = containerRef.current;
+    const logo = logoRef.current;
 
-    const tl = gsap.timeline({
-      defaults: { ease: "power3.out" },
-      onComplete: () => void router.replace("/"), // Ignora la promesa
+    if (!container || !logo) return;
+
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+    // 1. Fade in
+    tl.fromTo(
+      logo,
+      { opacity: 0, scale: 0.9 },
+      { opacity: 1, scale: 1, duration: 0.8 }
+    );
+
+    // 2. Movimiento hacia arriba (simulando navbar)
+    tl.to(logo, {
+      y: -200,
+      scale: 0.5,
+      duration: 0.8,
     });
 
-    tl.fromTo(
-      logoRef.current,
-      { opacity: 0, scale: 0.8 },
-      { opacity: 1, scale: 1, duration: 0.8 }
-    )
-      .to(logoRef.current, { y: -100, scale: 0.5, duration: 0.8 })
-      .to(logoRef.current, { opacity: 0, duration: 0.5 });
+    // 3. Fade out del fondo
+    tl.to(container, { opacity: 0, duration: 0.5 });
+
+    // 4. Redirigir a la página principal
+    tl.add(() => {
+      router.push("/");
+    });
+
+    return () => {
+      tl.kill();
+    }
   }, [router]);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
-      <img ref={logoRef} src="/logo.png" alt="Logo" className="w-40 h-40" />
+    <div
+      ref={containerRef}
+      className="fixed inset-0 z-50 bg-white flex items-center justify-center"
+    >
+      <img
+        ref={logoRef}
+        src="/logo.png"
+        alt="Logo"
+        className="w-40 h-40"
+      />
     </div>
   );
 }
+
