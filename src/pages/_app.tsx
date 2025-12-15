@@ -7,13 +7,6 @@ import "../styles/globals.css"; // ajusta la ruta si tu archivo global está en 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
-  useEffect(() => {
-    // Si estás en la raíz, manda a /intro
-    if (router.pathname === "/") {
-      router.replace("/intro");
-    }
-  }, [router]);
-
   return <Component {...pageProps} />;
 }
 
