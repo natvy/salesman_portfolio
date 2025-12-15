@@ -14,47 +14,48 @@ export default function Home() {
   useEffect(() => {
     if (!introDone) return;
 
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
 
     if (heroRef.current) {
       tl.fromTo(
         heroRef.current,
-        { opacity: 0, y: 10 },
-        { opacity: 1, y: 0, duration: 0.8 }
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.6 }
       );
     }
 
     if (cardsRef.current.length) {
       tl.fromTo(
         cardsRef.current,
-        { opacity: 0, y: 16 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.15 },
-        "-=0.2"
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, stagger: 0.12 },
+        "-=0.15"
       );
     }
 
     return () => {
-      tl.kill(); // mata la animación
+      tl.kill();
     };
   }, [introDone]);
 
   return (
     <Layout>
-      {!introDone && <Intro onFinish={() => setIntroDone(true)} />}
-      {introDone && <Navbar />}
+      <Intro onFinish={() => setIntroDone(true)} />
+      <Navbar visible={introDone} />
 
       <main className="min-h-screen px-6 pt-20">
-        {/* Hero */}
-        <section ref={heroRef} className="mx-auto max-w-4xl text-center py-16">
+        <section
+          ref={heroRef}
+          className="mx-auto max-w-4xl text-center py-16 opacity-0"
+        >
           <h1 className="text-5xl font-bold mb-4">
             Salesman - Portfolio
           </h1>
           <p className="text-lg text-gray-700">
-            Proyectos del lindote del diego
+            Proyectos del lindote del Diego
           </p>
         </section>
 
-        {/* Grid de proyectos */}
         <section className="mx-auto max-w-6xl grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {[1, 2, 3].map((num, i) => (
             <div
@@ -62,7 +63,7 @@ export default function Home() {
               ref={(el) => {
                 cardsRef.current[i] = el;
               }}
-              className="border rounded-lg p-6 shadow-lg hover:shadow-2xl transition-transform transform hover:-translate-y-2 bg-white"
+              className="opacity-0 border rounded-lg p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white"
             >
               <img
                 src={`/proyecto${num}.jpg`}

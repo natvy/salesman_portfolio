@@ -10,52 +10,35 @@ export default function Intro({ onFinish }: IntroProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const logoRef = useRef<HTMLImageElement | null>(null);
 
- useEffect(() => {
-  const container = containerRef.current;
-  const logo = logoRef.current;
-  const navbarLogo = document.getElementById("navbar-logo");
+  useEffect(() => {
+    const logo = logoRef.current;
+    const container = containerRef.current;
 
-  if (!container || !logo || !navbarLogo) {
-    return; // ✅ Esto devuelve void
-  }
+    if (!logo || !container) return;
 
-  const tl = gsap.timeline({
-    defaults: { ease: "power3.out" },
-  });
+    const tl = gsap.timeline({
+      defaults: { ease: "power2.out" },
+    });
 
-  // 1. Fade in
-  tl.fromTo(
-    logo,
-    { opacity: 0, scale: 0.9 },
-    { opacity: 1, scale: 1, duration: 0.8 }
-  );
+    tl.fromTo(
+      logo,
+      { opacity: 0, scale: 0.95 },
+      { opacity: 1, scale: 1, duration: 0.6 }
+    )
+      .to(logo, {
+        y: -40,
+        duration: 0.6,
+      })
+      .to(container, {
+        opacity: 0,
+        duration: 0.4,
+      })
+      .add(onFinish);
 
-  // 2. Movimiento hacia el navbar
-  const navRect = navbarLogo.getBoundingClientRect();
-  const logoRect = logo.getBoundingClientRect();
-
-  const x = navRect.left - logoRect.left;
-  const y = navRect.top - logoRect.top;
-
-  tl.to(logo, {
-    x,
-    y,
-    scale: 0.5,
-    duration: 0.8,
-  });
-
-  // 3. Fade out del fondo
-  tl.to(container, { opacity: 0, duration: 0.5 });
-
-  // 4. Llamamos onFinish
-  tl.add(() => onFinish());
-
-  // ✅ Cleanup SIEMPRE devuelve void
-  return () => {
-    tl.kill(); // ✅ kill() devuelve void, no un Timeline
-  };
-}, [onFinish]);
-
+    return () => {
+      tl.kill();
+    };
+  }, [onFinish]);
 
   return (
     <div

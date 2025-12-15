@@ -1,10 +1,32 @@
 // src/components/Navbar.tsx
-export default function Navbar() {
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+
+type NavbarProps = {
+  visible: boolean;
+};
+
+export default function Navbar({ visible }: NavbarProps) {
+  const navRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!navRef.current) return;
+
+    gsap.to(navRef.current, {
+      opacity: visible ? 1 : 0,
+      y: visible ? 0 : -8,
+      duration: 0.4,
+      ease: "power2.out",
+      pointerEvents: visible ? "auto" : "none",
+    });
+  }, [visible]);
+
   return (
-    <div className="fixed top-0 left-0 right-0 z-40 bg-white/90 backdrop-blur border-b border-gray-200">
+    <div
+      ref={navRef}
+      className="fixed top-0 left-0 right-0 z-40 bg-white/90 backdrop-blur border-b border-gray-200 opacity-0"
+    >
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        
-        {/* Logo destino */}
         <img
           id="navbar-logo"
           src="/logo.png"
@@ -12,10 +34,9 @@ export default function Navbar() {
           className="h-10 w-auto"
         />
 
-        {/* Links */}
         <nav className="flex gap-8 text-gray-700 font-medium">
           <a href="/Home" className="hover:text-black transition-colors">Home</a>
-          <a href="/projects" className="hover:text-black transition-colors">Pojects</a>
+          <a href="/projects" className="hover:text-black transition-colors">Projects</a>
           <a href="/about" className="hover:text-black transition-colors">About me</a>
           <a href="/contact" className="hover:text-black transition-colors">Contact</a>
         </nav>
