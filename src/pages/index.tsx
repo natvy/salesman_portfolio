@@ -1,62 +1,46 @@
 // src/pages/index.tsx
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import Layout from "../components/Layout";
-import Intro from "../components/Intro";
 import Navbar from "../components/Navbar";
 import Link from "next/link";
 
 export default function Home() {
-  const [introDone, setIntroDone] = useState(false);
   const heroRef = useRef<HTMLDivElement | null>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    if (!introDone) return;
-
-    const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
     if (heroRef.current) {
       tl.fromTo(
         heroRef.current,
-        { opacity: 0, y: 16 },
-        { opacity: 1, y: 0, duration: 0.6 }
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.8 }
       );
     }
 
     if (cardsRef.current.length) {
       tl.fromTo(
         cardsRef.current,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.6, stagger: 0.12 },
-        "-=0.15"
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.15 },
+        "-=0.2"
       );
     }
 
     return () => {
-      tl.kill();
+      tl.kill(); //Devuelve void
     };
-  }, [introDone]);
+  }, []);
 
   return (
     <Layout>
-      {/* Intro siempre arriba y bloqueando */}
-      {!introDone && <Intro onFinish={() => setIntroDone(true)} />}
+      <Navbar />
 
-      {/* Navbar solo aparece después */}
-      {introDone && <Navbar/>}
-
-      {/* CONTENIDO: invisible hasta que intro termine */}
-      <main
-        className={`min-h-screen px-6 pt-20 transition-opacity duration-300 ${
-          introDone ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      >
+      <main className="min-h-screen px-6 pt-20">
         {/* Hero */}
-        <section
-          ref={heroRef}
-          className="mx-auto max-w-4xl text-center py-16 opacity-0"
-        >
+        <section ref={heroRef} className="mx-auto max-w-4xl text-center py-16">
           <h1 className="text-5xl font-bold mb-4">Salesman - Portfolio</h1>
           <p className="text-lg text-gray-700">
             Proyectos del lindote del Diego
@@ -70,7 +54,7 @@ export default function Home() {
               key={i}
               ref={(el) => {
                 cardsRef.current[i] = el;
-              }}
+              }} // sin return
               className="opacity-0 border rounded-lg p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white"
             >
               <img

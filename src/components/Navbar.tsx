@@ -1,29 +1,17 @@
 // src/components/Navbar.tsx
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-
 export default function Navbar() {
-  const navRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (!navRef.current) return;
-
-    // Animación de entrada opcional
-    gsap.fromTo(
-      navRef.current,
-      { opacity: 0, y: -8 },
-      { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
-    );
-  }, []);
-
   return (
-    <div
-      ref={navRef}
-      className="fixed top-0 left-0 right-0 z-40 bg-white/90 backdrop-blur border-b border-gray-200"
-    >
+    <div className="fixed top-0 left-0 right-0 z-40 bg-white/90 backdrop-blur border-b border-gray-200">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <img id="navbar-logo" src="/logo.png" alt="Logo" className="h-10 w-auto" />
+        {/* Logo */}
+        <img
+          id="navbar-logo"
+          src="/logo.png"
+          alt="Logo"
+          className="h-10 w-auto"
+        />
 
+        {/* Links */}
         <nav className="flex gap-8 text-gray-700 font-medium">
           <a href="/Home" className="hover:text-black transition-colors">Home</a>
           <a href="/projects" className="hover:text-black transition-colors">Projects</a>
@@ -34,3 +22,4 @@ export default function Navbar() {
     </div>
   );
 }
+
