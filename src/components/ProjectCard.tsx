@@ -1,5 +1,9 @@
+// src/components/ProjectCard.tsx
+
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 interface ProjectCardProps {
   id: string;
@@ -18,13 +22,35 @@ export default function ProjectCard({
   isActive,
   onSelect,
 }: ProjectCardProps) {
+  const router = useRouter();
+  const [isTouch, setIsTouch] = useState(false);
+
+  useEffect(() => {
+    setIsTouch(window.matchMedia("(pointer: coarse)").matches);
+  }, []);
+
+  const handleClick = () => {
+    if (!isTouch) {
+      // Desktop: navegar directo
+      router.push(`/projects/${id}`);
+      return;
+    }
+
+    // Mobile
+    if (!isActive) {
+      onSelect(id); // expande
+    } else {
+      router.push(`/projects/${id}`); // ya expandida → navega
+    }
+  };
+
   return (
     <motion.div
       layout
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      onClick={() => onSelect(id)}
+      onClick={handleClick}
       style={{
         cursor: "pointer",
         overflow: "hidden",
@@ -56,8 +82,8 @@ export default function ProjectCard({
         transition={{ duration: 0.3 }}
         style={{
           padding: isActive ? "1.5rem" : "0",
-          maxHeight: isActive ? "1000px" : "0", // lo suficiente para cualquier texto
-          overflow: "hidden", // importante para transición limpia
+          maxHeight: isActive ? "1000px" : "0",
+          overflow: "hidden",
         }}
       >
         {isActive && (
