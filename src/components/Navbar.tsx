@@ -6,10 +6,10 @@ export default function Navbar(visible: { visible: boolean }) {
       <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <img src="/logo.png" alt="Logo" className="h-10 w-auto" />
         <div className="flex gap-8">
-          <Link href="/" className="text-gray-700 font-medium hover:text-black transition-transform duration-200 hover:scale-105">Inicio</Link>
-          <Link href="/proyectos" className="text-gray-700 font-medium hover:text-black transition-transform duration-200 hover:scale-105">Proyectos</Link>
-          <Link href="/sobre-mi" className="text-gray-700 font-medium hover:text-black transition-transform duration-200 hover:scale-105">Sobre mí</Link>
-          <Link href="/contacto" className="text-gray-700 font-medium hover:text-black transition-transform duration-200 hover:scale-105">Contacto</Link>
+          <Link href="/" className="text-gray-700 font-medium hover:text-black transition-transform duration-200 hover:scale-105">Home</Link>
+          <Link href="/projects" className="text-gray-700 font-medium hover:text-black transition-transform duration-200 hover:scale-105">Projects</Link>
+          <Link href="/about me" className="text-gray-700 font-medium hover:text-black transition-transform duration-200 hover:scale-105">About me</Link>
+          <Link href="/contact" className="text-gray-700 font-medium hover:text-black transition-transform duration-200 hover:scale-105">Contact</Link>
         </div>
       </nav>
     </header>
