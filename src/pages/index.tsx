@@ -8,6 +8,7 @@ import { projects } from "../data/projects"; // Tus 4 imágenes y datos
 export default function Home() {
   const [activeProject, setActiveProject] = useState<string | null>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   // Animación inicial de entrada de las cards
   useEffect(() => {
@@ -21,6 +22,25 @@ export default function Home() {
         }, index * 150); // animación escalonada
       }
     });
+  }, []);
+
+  //detectar clicks afuera del contenedor: 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (containerRef.current && 
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setActiveProject(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
   }, []);
 
   const handleSelect = (id: string) => {
