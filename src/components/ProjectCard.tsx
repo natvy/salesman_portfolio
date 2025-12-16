@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface ProjectCardProps {
   id: string;
@@ -23,25 +23,14 @@ export default function ProjectCard({
   onSelect,
 }: ProjectCardProps) {
   const router = useRouter();
-  const [isTouch, setIsTouch] = useState(false);
-
-  useEffect(() => {
-    setIsTouch(window.matchMedia("(pointer: coarse)").matches);
-  }, []);
+  const [hasHovered, setHasHovered] = useState(false);
 
   const handleClick = () => {
-    if (!isTouch) {
-      // Desktop: navegar directo
-      router.push(`/projects/${id}`);
+    if (!hasHovered && !isActive) {
+      onSelect(id); // tap sin hover previo → expandir
       return;
     }
-
-    // Mobile
-    if (!isActive) {
-      onSelect(id); // expande
-    } else {
-      router.push(`/projects/${id}`); // ya expandida → navega
-    }
+    router.push(`/projects/${id}`);
   };
 
   return (
@@ -50,6 +39,10 @@ export default function ProjectCard({
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
+      onHoverStart={() => {
+        setHasHovered(true);
+        onSelect(id);
+      }}
       onClick={handleClick}
       style={{
         cursor: "pointer",
@@ -58,7 +51,6 @@ export default function ProjectCard({
         background: "#F92424",
       }}
     >
-      {/* Imagen */}
       <motion.div layout>
         <Image
           src={image}
@@ -74,7 +66,6 @@ export default function ProjectCard({
         />
       </motion.div>
 
-      {/* Contenido */}
       <motion.div
         layout
         initial={false}
