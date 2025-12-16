@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "24.x"
+    "node": ">=20 <21"
   },
   "scripts": {
     "dev": "next dev",
@@ -16,7 +16,7 @@
     "howler": "^2.2.4",
     "lazyload": "2.0.0-rc.2",
     "lazysizes": "^5.3.2",
-    "next": "14.2.5",
+    "next": "^14.2.35",
     "next-seo": "^7.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -24,13 +24,13 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "18.2.0",
-    "@types/react-dom": "18.2.0",
+    "@types/node": "^20.19.27",
+    "@types/react": "^18.3.27",
+    "@types/react-dom": "^18.3.7",
     "autoprefixer": "^10.4.22",
     "babel-plugin-react-compiler": "1.0.0",
-    "eslint": "^9",
-    "eslint-config-next": "14.2.5",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^14.2.5",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.19",
     "typescript": "^5"
