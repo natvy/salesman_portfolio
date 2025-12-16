@@ -33,9 +33,11 @@ export default function Home() {
 
       <main className="min-h-screen px-6 pt-20">
         {/* Hero */}
-        <section className="mx-auto max-w-4xl text-center py-16">
-          <h1 className="text-5xl font-bold mb-4">Salesman - Portfolio</h1>
-          <p className="text-lg text-gray-700">
+        <section className="mx-auto max-w-4xl text-center py-16 px-4">
+          <h1 className="text-4xl sm:text-5xl font-bold mb-4">
+            Salesman - Portfolio
+          </h1>
+          <p className="text-base sm:text-lg text-gray-700">
             Proyectos del lindote del Diego
           </p>
         </section>

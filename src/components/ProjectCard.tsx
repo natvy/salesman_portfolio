@@ -29,7 +29,7 @@ export default function ProjectCard({
         cursor: "pointer",
         overflow: "hidden",
         borderRadius: "12px",
-        background: "#111",
+        background: "#F92424",
       }}
     >
       {/* Imagen */}
@@ -56,13 +56,14 @@ export default function ProjectCard({
         transition={{ duration: 0.3 }}
         style={{
           padding: isActive ? "1.5rem" : "0",
-          maxHeight: isActive ? "300px" : "0",
+          maxHeight: isActive ? "1000px" : "0", // lo suficiente para cualquier texto
+          overflow: "hidden", // importante para transición limpia
         }}
       >
         {isActive && (
           <>
-            <h3>{title}</h3>
-            <p>{description}</p>
+            <h3 className="text-xl font-semibold mb-2">{title}</h3>
+            <p className="text-white-600">{description}</p>
           </>
         )}
       </motion.div>
