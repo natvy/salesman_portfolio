@@ -1,5 +1,4 @@
 // src/components/ProjectCard.tsx
-
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -26,10 +25,12 @@ export default function ProjectCard({
   const [hasHovered, setHasHovered] = useState(false);
 
   const handleClick = () => {
+    // Si no ha habido hover o la card no está activa → expandir
     if (!hasHovered && !isActive) {
-      onSelect(id); // tap sin hover previo → expandir
+      onSelect(id);
       return;
     }
+    // Si ya está expandida → navegar al detalle del proyecto
     router.push(`/projects/${id}`);
   };
 
@@ -51,7 +52,8 @@ export default function ProjectCard({
         background: "#F92424",
       }}
     >
-      <motion.div layout>
+      {/* Imagen con layoutId para animación suave */}
+      <motion.div layout layoutId={`project-image-${id}`}>
         <Image
           src={image}
           alt={title}
@@ -66,6 +68,7 @@ export default function ProjectCard({
         />
       </motion.div>
 
+      {/* Contenido expandible */}
       <motion.div
         layout
         initial={false}
