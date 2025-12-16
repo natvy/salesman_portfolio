@@ -1,15 +1,36 @@
 // src/pages/index.tsx
-import { useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Layout from "../layout/Layout";
 import Navbar from "../components/Navbar";
-import Link from "next/link";
+import ProjectCard from "../components/ProjectCard";
+import { projects } from "../data/projects"; // Tus 4 imágenes y datos
 
 export default function Home() {
+  const [activeProject, setActiveProject] = useState<string | null>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Animación inicial de entrada de las cards
+  useEffect(() => {
+    cardsRef.current.forEach((card, index) => {
+      if (card) {
+        card.style.opacity = "0";
+        setTimeout(() => {
+          card.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+          card.style.opacity = "1";
+          card.style.transform = "translateY(0)";
+        }, index * 150); // animación escalonada
+      }
+    });
+  }, []);
+
+  const handleSelect = (id: string) => {
+    setActiveProject((prev) => (prev === id ? null : id));
+  };
 
   return (
     <Layout>
       <Navbar visible={true} />
+
       <main className="min-h-screen px-6 pt-20">
         {/* Hero */}
         <section className="mx-auto max-w-4xl text-center py-16">
@@ -19,35 +40,28 @@ export default function Home() {
           </p>
         </section>
 
-        {/* Grid de proyectos */}
+        {/* Grid de proyectos con ProjectCard */}
         <section className="mx-auto max-w-6xl grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {[1, 2, 3].map((num, i) => (
+          {projects.map((project, i) => (
             <div
-              key={i}
+              key={project.id}
               ref={(el) => {
                 cardsRef.current[i] = el;
               }}
-              className="opacity-0 border rounded-lg p-6 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white"
             >
-              <img
-                src={`/proyecto${num}.jpg`}
-                alt={`Proyecto ${num}`}
-                className="rounded-md mb-4"
+              <ProjectCard
+                id={project.id}
+                title={project.title}
+                description={project.description}
+                image={project.image}
+                isActive={activeProject === project.id}
+                onSelect={handleSelect}
               />
-              <h2 className="text-xl font-semibold">Proyecto {num}</h2>
-              <p className="text-gray-600">
-                Descripción breve del proyecto {num}.
-              </p>
-              <Link
-                href={`/proyecto${num}`}
-                className="text-blue-600 hover:underline"
-              >
-                Ver más →
-              </Link>
             </div>
           ))}
         </section>
 
+        {/* Footer */}
         <footer className="w-full py-10 text-center text-gray-500">
           © 2025 Salesman. Todos los derechos reservados.
         </footer>
