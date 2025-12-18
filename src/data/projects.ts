@@ -20,7 +20,7 @@ export const projects: Project[] = [
     id: "p1",
     title: "Project One",
     description:
-      "A concise architectural proposal focused on intent, constraints, and outcome.",
+      "A concise architectural proposal focused on intent, constraints, and outcome...",
     images: [
       {
         src: "/projects/project-01.jpg",
