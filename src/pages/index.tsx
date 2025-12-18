@@ -51,9 +51,9 @@ export default function Home() {
     <Layout>
       <Navbar visible={true} />
 
-      <main className="min-h-screen px-6 pt-20">
+      <main className="min-h-screen px-6 pt-0">
         {/* Hero */}
-        <section className="mx-auto max-w-4xl text-center py-16 px-4">
+        <section className="mx-auto max-w-4x1 text-center py-16 px-4">
           <h1 className="text-4xl sm:text-5xl font-bold mb-4">
             Salesman - Portfolio
           </h1>
