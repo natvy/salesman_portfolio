@@ -57,7 +57,7 @@ export default function Projects() {
               id={project.id}
               title={project.title}
               description={project.description}
-              image={project.image}
+              images={project.image}
               isActive={activeProject === project.id}
               onSelect={handleSelect}
             />
