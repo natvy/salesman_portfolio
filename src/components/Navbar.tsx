@@ -2,14 +2,17 @@
 import { useState } from "react";
 import Link from "next/link";
 
+
 export default function Navbar({ visible }: { visible: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm">
-      <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <img src="/logo.png" alt="Logo" className="h-10 w-auto" />
+      <nav className="max-w-6xl mx-auto px-0 h-16 flex items-center justify-between">
+        {/* Logo como botón */}
+        <Link href="/" className="h-10 flex items-center hover:opacity-80 transition-opacity duration-200">
+            <img src="/logo.png" alt="Logo" className="h-10 w-auto ml-2" />
+        </Link>
 
         {/* Desktop menu */}
         <div className="hidden md:flex gap-8">
@@ -32,7 +35,7 @@ export default function Navbar({ visible }: { visible: boolean }) {
           className="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
           onClick={() => setMenuOpen(!menuOpen)}
         >
-          {/* Puedes descargar un ícono de hamburguesa o usar uno simple con CSS */}
+          {/*icono de hamburguesa o cierre dependiendo del estado */}
           {menuOpen ? (
             <img src="/icons/close.svg" alt="Close menu" className="h-6 w-6" />
           ) : (
