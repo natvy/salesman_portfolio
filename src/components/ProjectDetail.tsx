@@ -25,50 +25,106 @@ export default function ProjectDetail({ initialId, projects }: ProjectDetailProp
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   const verticalRef = useRef<HTMLDivElement | null>(null);
+  const scrollTimeoutRef = useRef<number | null>(null);
+
   const ITEM_HEIGHT = 500;
   const SCALE_MIN = 0.78;
   const rawScrollY = useSpring(0, { stiffness: 120, damping: 25, mass: 0.4 });
+
   const activeProject = projects[activeProjectIndex];
+  const n = activeProject.images.length; // cantidad original
+
+  // --- Construimos la lista extendida: [ cloneLastBlock, originalBlock, cloneFirstBlock ]
+  // Esto permite el efecto visual de loop.
+  const extendedImages = [
+    ...activeProject.images.slice(-n), // última copia
+    ...activeProject.images,           // original
+    ...activeProject.images.slice(0, n) // primera copia
+  ];
+
+  const CLONE_OFFSET = n; // desplazamiento donde comienza el bloque 'real'
 
   const getCenterY = () => (verticalRef.current?.clientHeight || 0) / 2;
 
-  // Scroll snap automático
-  let scrollTimeout: NodeJS.Timeout;
+  // Al cambiar de proyecto, forzamos el scroll al bloque central (posición inicial)
+  useEffect(() => {
+    const container = verticalRef.current;
+    if (!container) return;
+    const startTop = CLONE_OFFSET * ITEM_HEIGHT;
+    // posicion instantánea al cambiar de proyecto (sin animación extra)
+    container.scrollTop = startTop;
+    rawScrollY.set(startTop);
+    setSelectedImageIndex(0);
+  }, [activeProjectIndex]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Actualiza selectedImageIndex en tiempo real durante el scroll (mapea extended -> original)
+  useEffect(() => {
+    const unsubscribe = rawScrollY.on("change", (value) => {
+      const center = getCenterY();
+      const extendedIndex = Math.round((value + center - ITEM_HEIGHT / 2) / ITEM_HEIGHT);
+      // mapear a índice original (0..n-1)
+      const orig = ((extendedIndex - CLONE_OFFSET) % n + n) % n;
+      const clamped = Math.max(0, Math.min(n - 1, orig));
+      setSelectedImageIndex(clamped);
+    });
+    return () => unsubscribe();
+  }, [rawScrollY, n]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Manejo de scroll con snap al soltar (usa timeout debounce)
   const handleVerticalScroll = () => {
-    if (!verticalRef.current) return;
+    const container = verticalRef.current;
+    if (!container) return;
 
-    const scrollTop = verticalRef.current.scrollTop;
+    const scrollTop = container.scrollTop;
     rawScrollY.set(scrollTop);
 
-    // Reiniciamos timeout para detectar fin de scroll
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-      const center = getCenterY();
-      const index = Math.round((scrollTop + center - ITEM_HEIGHT / 2) / ITEM_HEIGHT);
-      const clampedIndex = Math.max(0, Math.min(activeProject.images.length - 1, index));
+    // debounce para detectar fin de scroll
+    if (scrollTimeoutRef.current) {
+      window.clearTimeout(scrollTimeoutRef.current);
+    }
 
-      verticalRef.current?.scrollTo({ top: clampedIndex * ITEM_HEIGHT, behavior: "smooth" });
-      setSelectedImageIndex(clampedIndex);
-    }, 100); // 100ms después del último scroll
+    scrollTimeoutRef.current = window.setTimeout(() => {
+      const center = getCenterY();
+      const extendedIndex = Math.round((scrollTop + center - ITEM_HEIGHT / 2) / ITEM_HEIGHT);
+
+      // índice equivalente dentro del bloque central
+      const origIndex = ((extendedIndex - CLONE_OFFSET) % n + n) % n;
+      const targetExtendedIndex = CLONE_OFFSET + origIndex;
+
+      // Snap suave hacia la posición en el bloque central
+      container.scrollTo({
+        top: targetExtendedIndex * ITEM_HEIGHT,
+        behavior: "smooth",
+      });
+
+      setSelectedImageIndex(origIndex);
+    }, 110); // 110ms tras el último evento de scroll
   };
 
   useEffect(() => {
     const container = verticalRef.current;
     container?.addEventListener("scroll", handleVerticalScroll, { passive: true });
-    return () => container?.removeEventListener("scroll", handleVerticalScroll);
-  }, [activeProjectIndex]);
+    return () => {
+      container?.removeEventListener("scroll", handleVerticalScroll);
+      if (scrollTimeoutRef.current) {
+        window.clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+    // dependemos de activeProjectIndex para rebind cuando cambiamos proyecto
+  }, [activeProjectIndex]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Actualiza selectedImageIndex mientras se desplaza
-  useEffect(() => {
-    const unsubscribe = rawScrollY.on("change", (value) => {
-      const center = getCenterY();
-      const index = Math.round((value + center - ITEM_HEIGHT / 2) / ITEM_HEIGHT);
-      const clamped = Math.max(0, Math.min(activeProject.images.length - 1, index));
-      setSelectedImageIndex(clamped);
+  // Helper para cuando se clickea una miniatura: navegar al bloque central y a la imagen deseada
+  const scrollToImage = (index: number, smooth = true) => {
+    const container = verticalRef.current;
+    if (!container) return;
+    const targetExtendedIndex = CLONE_OFFSET + index;
+    container.scrollTo({
+      top: targetExtendedIndex * ITEM_HEIGHT,
+      behavior: smooth ? "smooth" : "auto",
     });
-    return () => unsubscribe();
-  }, [rawScrollY, activeProject]);
+    rawScrollY.set(targetExtendedIndex * ITEM_HEIGHT);
+    setSelectedImageIndex(index);
+  };
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row px-6 py-10">
@@ -125,10 +181,8 @@ export default function ProjectDetail({ initialId, projects }: ProjectDetailProp
               }}
               onClick={() => {
                 setActiveProjectIndex(i);
-                setSelectedImageIndex(0);
-                requestAnimationFrame(() => {
-                  verticalRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-                });
+                // al cambiar de proyecto, scrolleamos a bloque central, imagen 0
+                requestAnimationFrame(() => scrollToImage(0));
               }}
             >
               <Image
@@ -143,13 +197,13 @@ export default function ProjectDetail({ initialId, projects }: ProjectDetailProp
         </div>
       </div>
 
-      {/* Panel derecho */}
+      {/* Panel derecho: contenedor con la lista extendida */}
       <div
         ref={verticalRef}
         className="lg:w-2/3 mt-6 lg:mt-0 lg:ml-6 h-[80vh] overflow-y-scroll relative scroll-smooth"
       >
         <div className="relative">
-          {activeProject.images.map((img, i) => {
+          {extendedImages.map((imageObj, i) => {
             const itemCenter = i * ITEM_HEIGHT + ITEM_HEIGHT / 2;
 
             const scale = useTransform(rawScrollY, (value) => {
@@ -162,9 +216,13 @@ export default function ProjectDetail({ initialId, projects }: ProjectDetailProp
               return Math.max(0.4, 1 - dist / 900);
             });
 
+            // Si necesitas shared layout sólo para la primera imagen real:
+            const isHeroExtended = i === CLONE_OFFSET; // primera real en bloque central
+
             return (
               <motion.div
-                key={img.src}
+                key={`${imageObj.src}-${i}`}
+                layoutId={isHeroExtended ? `shared-image-${activeProject.id}` : undefined}
                 style={{
                   height: ITEM_HEIGHT,
                   width: "100%",
@@ -174,13 +232,15 @@ export default function ProjectDetail({ initialId, projects }: ProjectDetailProp
                 }}
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.45,
-                  ease: [0.25, 0.1, 0.25, 1],
+                transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
+                onDoubleClick={() => {
+                  // ejemplo: doble click centra esta imagen (útil en pruebas)
+                  const origIndex = ((i - CLONE_OFFSET) % n + n) % n;
+                  scrollToImage(origIndex);
                 }}
               >
                 <Image
-                  src={img.src}
+                  src={imageObj.src}
                   alt={`${activeProject.title}-${i}`}
                   width={800}
                   height={ITEM_HEIGHT}
