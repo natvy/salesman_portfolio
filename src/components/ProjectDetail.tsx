@@ -1,5 +1,10 @@
 // src/components/ProjectDetail.tsx
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
@@ -22,9 +27,15 @@ export default function ProjectDetail({
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   const verticalRef = useRef<HTMLDivElement | null>(null);
+
   const ITEM_HEIGHT = 500;
-  const SCALE_MIN = 0.7;
-  const [scrollY, setScrollY] = useState(0);
+  const SCALE_MIN = 0.78;
+
+  const rawScrollY = useSpring(0, {
+    stiffness: 120,
+    damping: 25,
+    mass: 0.4,
+  });
 
   const activeProject = projects[activeProjectIndex];
 
@@ -32,61 +43,81 @@ export default function ProjectDetail({
 
   const handleVerticalScroll = () => {
     if (!verticalRef.current) return;
-    const scrollTop = verticalRef.current.scrollTop;
-    setScrollY(scrollTop);
-  };
-
-  const handleMiniClick = (index: number) => {
-    setActiveProjectIndex(index);
-    setSelectedImageIndex(0); // siempre mostrar la primera imagen al cambiar de proyecto
-    verticalRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+    rawScrollY.set(verticalRef.current.scrollTop);
   };
 
   useEffect(() => {
     const container = verticalRef.current;
-    container?.addEventListener("scroll", handleVerticalScroll);
+    container?.addEventListener("scroll", handleVerticalScroll, {
+      passive: true,
+    });
     return () => container?.removeEventListener("scroll", handleVerticalScroll);
   }, []);
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row px-6 py-10">
-      {/* Panel izquierdo: info y mini-galería */}
-      <div className="lg:w-1/3 flex flex-col gap-6">
-        <button
-          onClick={() => router.push("/")}
-          className="text-blue-600 font-semibold"
-        >
-          ← Back
-        </button>
+      {/* Panel izquierdo */}
+      <div className="lg:w-1/3 flex flex-col justify-start relative">
+        <div className="mb-6">
+          <motion.button
+            onClick={() => router.push("/")}
+            className="text-blue-600 font-semibold mb-4"
+            whileHover={{ x: -4 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          >
+            ← Back
+          </motion.button>
 
-        <div className="flex gap-4 overflow-x-auto mt-4">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeProject.id}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              <h1 className="text-3xl font-bold">{activeProject.title}</h1>
+              <p className="text-gray-700 mt-4">{activeProject.description}</p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Mini-galería */}
+        <div className="absolute bottom-20 left-0 flex gap-3">
           {projects.map((proj, i) => (
-            <div
+            <motion.div
               key={proj.id}
+              layoutId={`shared-image-${proj.id}`}
               className="flex-shrink-0 w-24 h-24 cursor-pointer"
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.96 }}
+              transition={{
+                layout: {
+                  duration: 0.8,
+                  ease: [0.22, 1, 0.36, 1], // easeOutCubic elegante
+                },
+              }}
               onClick={() => {
-                verticalRef.current?.scrollTo({
-                  top: i * ITEM_HEIGHT,
-                  behavior: "smooth",
+                setActiveProjectIndex(i);
+                setSelectedImageIndex(0);
+                requestAnimationFrame(() => {
+                  verticalRef.current?.scrollTo({ top: 0, behavior: "smooth" });
                 });
-                setActiveProjectIndex(i); // actualizar proyecto activo
               }}
             >
-              <motion.div layoutId={`project-${proj.id}`}>
-                <Image
-                  src={proj.images[0]}
-                  alt={proj.title}
-                  width={100}
-                  height={100}
-                  className="object-cover rounded-md"
-                />
-              </motion.div>
-            </div>
+              <Image
+                src={proj.images[0]}
+                alt={proj.title}
+                width={100}
+                height={100}
+                className="object-cover rounded-md"
+              />
+            </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Panel derecho: scroll vertical */}
+      {/* Panel derecho */}
       <div
         ref={verticalRef}
         className="lg:w-2/3 mt-6 lg:mt-0 lg:ml-6 h-[80vh] overflow-y-scroll relative scroll-smooth"
@@ -94,34 +125,43 @@ export default function ProjectDetail({
         <div className="relative">
           {activeProject.images.map((img, i) => {
             const itemCenter = i * ITEM_HEIGHT + ITEM_HEIGHT / 2;
-            const dist = Math.abs(itemCenter - scrollY - getCenterY());
-            const scale = Math.max(SCALE_MIN, 1 - dist / 1000);
+            const isHero = i === 0;
+
+            const scale = useTransform(rawScrollY, (value) => {
+              const dist = Math.abs(itemCenter - value - getCenterY());
+              return Math.max(SCALE_MIN, 1 - dist / 1100);
+            });
+
+            const opacity = useTransform(rawScrollY, (value) => {
+              const dist = Math.abs(itemCenter - value - getCenterY());
+              return Math.max(0.4, 1 - dist / 900);
+            });
 
             return (
-              <AnimatePresence key={img}>
-                <motion.div
-                  key={img}
-                  style={{
-                    height: ITEM_HEIGHT,
-                    width: "100%",
-                    scale,
-                    marginBottom: 16,
-                  }}
-                  layoutId={`project-${activeProject.id}`} // la misma id que en la miniatura
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <Image
-                    src={img}
-                    alt={`${activeProject.title}-${i}`}
-                    width={800}
-                    height={ITEM_HEIGHT}
-                    className="object-cover w-full h-auto rounded-md"
-                  />
-                </motion.div>
-              </AnimatePresence>
+              <motion.div
+                key={img}
+                layoutId={
+                  isHero ? `shared-image-${activeProject.id}` : undefined
+                }
+                style={{
+                  height: ITEM_HEIGHT,
+                  width: "100%",
+                  scale,
+                  opacity,
+                  marginBottom: 20,
+                }}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
+              >
+                <Image
+                  src={img}
+                  alt={`${activeProject.title}-${i}`}
+                  width={800}
+                  height={ITEM_HEIGHT}
+                  className="object-cover w-full h-auto rounded-md"
+                />
+              </motion.div>
             );
           })}
         </div>
