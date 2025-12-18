@@ -75,7 +75,7 @@ export default function Home() {
                 id={project.id}
                 title={project.title}
                 description={project.description}
-                image={project.image}
+                images={project.images[0].src}
                 isActive={activeProject === project.id}
                 onSelect={handleSelect}
               />

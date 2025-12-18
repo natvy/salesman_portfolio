@@ -15,11 +15,9 @@ interface ProjectDetailProps {
   projects: Project[];
 }
 
-export default function ProjectDetail({
-  initialId,
-  projects,
-}: ProjectDetailProps) {
+export default function ProjectDetail({ initialId, projects }: ProjectDetailProps) {
   const router = useRouter();
+
   const initialIndex = projects.findIndex((p) => p.id === initialId);
   const [activeProjectIndex, setActiveProjectIndex] = useState(
     initialIndex >= 0 ? initialIndex : 0
@@ -27,32 +25,50 @@ export default function ProjectDetail({
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   const verticalRef = useRef<HTMLDivElement | null>(null);
-
   const ITEM_HEIGHT = 500;
   const SCALE_MIN = 0.78;
-
-  const rawScrollY = useSpring(0, {
-    stiffness: 120,
-    damping: 25,
-    mass: 0.4,
-  });
-
+  const rawScrollY = useSpring(0, { stiffness: 120, damping: 25, mass: 0.4 });
   const activeProject = projects[activeProjectIndex];
 
   const getCenterY = () => (verticalRef.current?.clientHeight || 0) / 2;
 
+  // Scroll snap automático
+  let scrollTimeout: NodeJS.Timeout;
+
   const handleVerticalScroll = () => {
     if (!verticalRef.current) return;
-    rawScrollY.set(verticalRef.current.scrollTop);
+
+    const scrollTop = verticalRef.current.scrollTop;
+    rawScrollY.set(scrollTop);
+
+    // Reiniciamos timeout para detectar fin de scroll
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      const center = getCenterY();
+      const index = Math.round((scrollTop + center - ITEM_HEIGHT / 2) / ITEM_HEIGHT);
+      const clampedIndex = Math.max(0, Math.min(activeProject.images.length - 1, index));
+
+      verticalRef.current?.scrollTo({ top: clampedIndex * ITEM_HEIGHT, behavior: "smooth" });
+      setSelectedImageIndex(clampedIndex);
+    }, 100); // 100ms después del último scroll
   };
 
   useEffect(() => {
     const container = verticalRef.current;
-    container?.addEventListener("scroll", handleVerticalScroll, {
-      passive: true,
-    });
+    container?.addEventListener("scroll", handleVerticalScroll, { passive: true });
     return () => container?.removeEventListener("scroll", handleVerticalScroll);
-  }, []);
+  }, [activeProjectIndex]);
+
+  // Actualiza selectedImageIndex mientras se desplaza
+  useEffect(() => {
+    const unsubscribe = rawScrollY.on("change", (value) => {
+      const center = getCenterY();
+      const index = Math.round((value + center - ITEM_HEIGHT / 2) / ITEM_HEIGHT);
+      const clamped = Math.max(0, Math.min(activeProject.images.length - 1, index));
+      setSelectedImageIndex(clamped);
+    });
+    return () => unsubscribe();
+  }, [rawScrollY, activeProject]);
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row px-6 py-10">
@@ -78,6 +94,19 @@ export default function ProjectDetail({
             >
               <h1 className="text-3xl font-bold">{activeProject.title}</h1>
               <p className="text-gray-700 mt-4">{activeProject.description}</p>
+
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={`${activeProject.id}-img-${selectedImageIndex}`}
+                  className="text-gray-600 mt-6 leading-relaxed"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+                >
+                  {activeProject.images[selectedImageIndex]?.description}
+                </motion.p>
+              </AnimatePresence>
             </motion.div>
           </AnimatePresence>
         </div>
@@ -92,10 +121,7 @@ export default function ProjectDetail({
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.96 }}
               transition={{
-                layout: {
-                  duration: 0.8,
-                  ease: [0.22, 1, 0.36, 1], // easeOutCubic elegante
-                },
+                layout: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
               }}
               onClick={() => {
                 setActiveProjectIndex(i);
@@ -106,7 +132,7 @@ export default function ProjectDetail({
               }}
             >
               <Image
-                src={proj.images[0]}
+                src={proj.images[0].src}
                 alt={proj.title}
                 width={100}
                 height={100}
@@ -125,7 +151,6 @@ export default function ProjectDetail({
         <div className="relative">
           {activeProject.images.map((img, i) => {
             const itemCenter = i * ITEM_HEIGHT + ITEM_HEIGHT / 2;
-            const isHero = i === 0;
 
             const scale = useTransform(rawScrollY, (value) => {
               const dist = Math.abs(itemCenter - value - getCenterY());
@@ -139,10 +164,7 @@ export default function ProjectDetail({
 
             return (
               <motion.div
-                key={img}
-                layoutId={
-                  isHero ? `shared-image-${activeProject.id}` : undefined
-                }
+                key={img.src}
                 style={{
                   height: ITEM_HEIGHT,
                   width: "100%",
@@ -152,10 +174,13 @@ export default function ProjectDetail({
                 }}
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
+                transition={{
+                  duration: 0.45,
+                  ease: [0.25, 0.1, 0.25, 1],
+                }}
               >
                 <Image
-                  src={img}
+                  src={img.src}
                   alt={`${activeProject.title}-${i}`}
                   width={800}
                   height={ITEM_HEIGHT}

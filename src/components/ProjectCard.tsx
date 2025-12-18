@@ -8,7 +8,7 @@ interface ProjectCardProps {
   id: string;
   title: string;
   description: string;
-  image: string;
+  images: string;
   isActive: boolean;
   onSelect: (id: string) => void;
 }
@@ -17,7 +17,7 @@ export default function ProjectCard({
   id,
   title,
   description,
-  image,
+  images,
   isActive,
   onSelect,
 }: ProjectCardProps) {
@@ -55,7 +55,7 @@ export default function ProjectCard({
       {/* Imagen con layoutId para animación suave */}
       <motion.div layout layoutId={`project-image-${id}`}>
         <Image
-          src={image}
+          src={images}
           alt={title}
           width={800}
           height={500}
