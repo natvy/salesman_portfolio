@@ -22,18 +22,26 @@ export default function AboutMe() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
             >
+              {/* Cortina roja */}
+
               <Image
-                src="/images/background3.jpg" // por si la quiere cambiar
+                src="/images/background5.png" // por si la quiere cambiar
                 alt="About me background"
                 fill
                 className="object-cover rounded-lg"
                 priority
               />
             </motion.div>
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: "0%" }}
+              transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
+              className="absolute top-0 left-6 h-full w-[45%] bg-red-600/30 rounded-lg pointer-events-none"
+            />
           </div>
 
           {/*Logo - centro superior de la imagen - pidelo de mas alta calidad*/}
-          {/* Logo dentro de la imagen */}
+          {/* Logo dentro de la imagen 
           <div className="absolute top-40 left-40">
             <motion.div
               initial={{ opacity: 0, y: -30 }}
@@ -48,7 +56,7 @@ export default function AboutMe() {
                 className="object-contain"
               />
             </motion.div>
-          </div>
+          </div> */}
 
           {/* Nombre - mitad izquierda */}
           <div className="absolute left-[12%] top-1/2 -translate-y-1/2">
@@ -70,7 +78,7 @@ export default function AboutMe() {
             >
               <h2 className="text-white text-4xl font-semibold">Arquitecto</h2>
               <p className="text-white text-m mt-2 leading-relaxed">
-                Arquitecto enfocado en el diseño de espacios sobrios y
+                Arquitecto enfocado en el diseño de espacios inspiradores y
                 funcionales, donde la estructura y la luz definen la experiencia
                 del habitar.
               </p>

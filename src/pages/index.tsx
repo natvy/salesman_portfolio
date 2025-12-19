@@ -3,6 +3,8 @@ import { useState, useRef, useEffect } from "react";
 import Layout from "../layout/Layout";
 import Navbar from "../components/Navbar";
 import ProjectCard from "../components/ProjectCard";
+import Image from "next/image";
+import { motion } from "framer-motion";
 import { projects } from "../data/projects"; // Tus 4 imágenes y datos
 
 export default function Home() {
@@ -24,10 +26,11 @@ export default function Home() {
     });
   }, []);
 
-  //detectar clicks afuera del contenedor: 
+  //detectar clicks afuera del contenedor:
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent | TouchEvent) => {
-      if (containerRef.current && 
+      if (
+        containerRef.current &&
         !containerRef.current.contains(event.target as Node)
       ) {
         setActiveProject(null);
@@ -51,24 +54,88 @@ export default function Home() {
     <Layout>
       <Navbar visible={true} />
 
-      <main className="min-h-screen px-6 pt-10">
-        {/* Hero */}
-        <section className="mx-auto max-w-4x1 text-center py-10 px-4">
-          <h1 className="text-4xl sm:text-5xl font-bold mb-4">
-            Salesman - Portfolio
-          </h1>
-          <p className="text-base sm:text-lg text-gray-700">
-            Proyectos del lindote del Diego
-          </p>
-        </section>
+      <main className="min-h-screen pt-10">
+        {/* ===================== HERO SECTION ===================== */}
+        {/* Sección principal con fondo negro a todo lo ancho */}
+        <motion.section
+          exit={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="w-screen bg-black py-16" // fondo horizontal completo + padding vertical
+        >
+          {/* Contenedor centrado que limita el ancho del contenido */}
+          <div className="mx-auto w-full max-w-6xl px-6">
+            {/* Caja del hero: controla la altura y recorta overflow */}
+            <div className="relative h-[32vh] min-h-[260px] overflow-hidden rounded-xl">
+              {/* ---------- Imagen de fondo animada ---------- */}
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3, duration: 0.6 }}
+                className="absolute inset-0" // ocupa toda la caja del hero
+              >
+                <Image
+                  src="/images/backgroundHome.jpg"
+                  alt="Home background"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </motion.div>
 
-        {/* Grid de proyectos con ProjectCard */}
-        <section className="mx-auto max-w-6xl grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+              {/* ---------- Cortina roja desde la derecha ---------- */}
+              <motion.div
+                initial={{ x: "100%" }}
+                animate={{ x: "0%" }}
+                transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
+                className="absolute top-0 right-0 h-full w-[35%] bg-red-600/30 pointer-events-none"
+              />
+
+              {/* ---------- Contenedor del texto (sobre la imagen) ---------- */}
+              <div className="relative z-10 h-full flex flex-col justify-center px-8 sm:px-14 text-white gap-3">
+                {/* Título principal */}
+                <motion.h1
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.3, duration: 1 }}
+                  className="text-4xl sm:text-6xl font-bold max-w-xl"
+                >
+                  Salesman - Portfolio
+                </motion.h1>
+
+                {/* Subtítulo */}
+                <motion.h2
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.5, duration: 1 }}
+                  className="text-2xl sm:text-4xl font-semibold"
+                >
+                  Architecture
+                </motion.h2>
+
+                {/* Descripción corta */}
+                <motion.p
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.7, duration: 1 }}
+                  className="text-base sm:text-lg max-w-md"
+                >
+                  Proyectos del lindote del Diego.
+                </motion.p>
+              </div>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* ===================== PROJECTS GRID ===================== */}
+        {/* Sección de tarjetas de proyectos debajo del hero */}
+        <section className="mx-auto mt-12 max-w-6xl px-6 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, i) => (
             <div
               key={project.id}
               ref={(el) => {
-                cardsRef.current[i] = el;
+                cardsRef.current[i] = el; // referencia para animación inicial
               }}
             >
               <ProjectCard
@@ -84,7 +151,7 @@ export default function Home() {
         </section>
 
         {/* Footer */}
-        <footer className="w-full py-10 text-center text-gray-500">
+        <footer className="w-full mt-32 py-10 text-center text-gray-500">
           © 2025 Salesman. Todos los derechos reservados.
         </footer>
       </main>
