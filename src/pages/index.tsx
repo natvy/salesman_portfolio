@@ -62,12 +62,9 @@ export default function Home() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="w-screen bg-black py-16" // fondo horizontal completo + padding vertical
+          className="relative w-screen h-[40vh] min-h-[280px] overflow-hidden" // fondo horizontal completo + padding vertical
         >
           {/* Contenedor centrado que limita el ancho del contenido */}
-          <div className="mx-auto w-full max-w-6xl px-6">
-            {/* Caja del hero: controla la altura y recorta overflow */}
-            <div className="relative h-[32vh] min-h-[260px] overflow-hidden rounded-xl">
               {/* ---------- Imagen de fondo animada ---------- */}
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
@@ -79,8 +76,8 @@ export default function Home() {
                   src="/images/backgroundHome.jpg"
                   alt="Home background"
                   fill
-                  className="object-cover"
                   priority
+                  className="object-cover"
                 />
               </motion.div>
 
@@ -89,11 +86,11 @@ export default function Home() {
                 initial={{ x: "100%" }}
                 animate={{ x: "0%" }}
                 transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-                className="absolute top-0 right-0 h-full w-[35%] bg-red-600/30 pointer-events-none"
+                className="absolute top-0 right-0 h-full w-[100%] bg-red-600/30 pointer-events-none"
               />
 
               {/* ---------- Contenedor del texto (sobre la imagen) ---------- */}
-              <div className="relative z-10 h-full flex flex-col justify-center px-8 sm:px-14 text-white gap-3">
+              <div className="relative z-10 h-full flex flex-col justify-center px-8 sm:px-15 text-white gap-3">
                 {/* Título principal */}
                 <motion.h1
                   initial={{ opacity: 0, x: -50 }}
@@ -124,8 +121,6 @@ export default function Home() {
                   Proyectos del lindote del Diego.
                 </motion.p>
               </div>
-            </div>
-          </div>
         </motion.section>
 
         {/* ===================== PROJECTS GRID ===================== */}
