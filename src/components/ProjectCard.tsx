@@ -49,7 +49,7 @@ export default function ProjectCard({
         cursor: "pointer",
         overflow: "hidden",
         //borderRadius: "12px", con comentario por si se arrepiente de quitar los bordes curvos
-        background: "#F92424",
+        background: "#E5203A",
       }}
     >
       {/* Imagen con layoutId para animación suave */}

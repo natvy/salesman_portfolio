@@ -93,7 +93,7 @@ export default function Home() {
                 initial={{ x: "100%" }}
                 animate={{ x: "0%" }}
                 transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-                className="absolute top-0 right-0 h-full w-[100%] bg-red-600/30 pointer-events-none"
+                className="absolute top-0 right-0 h-full w-[100%] bg-[#E5203A]/30 pointer-events-none"
               />
 
               {/* ---------- Contenedor del texto (sobre la imagen) ---------- */}
