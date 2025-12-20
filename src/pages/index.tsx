@@ -6,6 +6,13 @@ import ProjectCard from "../components/ProjectCard";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { projects } from "../data/projects"; // Tus 4 imágenes y datos
+import localFont from "next/font/local";
+const Audiowide = localFont({
+  src: "../../public/fonts/Audiowide-Regular.ttf",
+  weight: "400",
+  style: "normal",
+  variable: "--font-audiowide",
+});
 
 export default function Home() {
   const [activeProject, setActiveProject] = useState<string | null>(null);
@@ -96,7 +103,7 @@ export default function Home() {
                   initial={{ opacity: 0, x: -50 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.3, duration: 1 }}
-                  className="text-4xl sm:text-6xl font-bold max-w-xl"
+                  className={`${Audiowide.className} text-4xl sm:text-6xl font-bold`} //asi puedo cambiar las fuentes de mis apartados
                 >
                   Salesman - Portfolio
                 </motion.h1>
