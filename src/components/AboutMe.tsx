@@ -13,7 +13,7 @@ export default function AboutMe() {
   return (
     <motion.div
       exit={{ opacity: 0, y: 40 }}
-      className="min-h-screen px-8 py-16"
+      className="min-h-screen  py-16"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
@@ -33,7 +33,7 @@ export default function AboutMe() {
                 src="/images/background5.png" // por si la quiere cambiar
                 alt="About me background"
                 fill
-                className="object-cover rounded-lg"
+                className="object-cover "
                 priority
               />
             </motion.div>
