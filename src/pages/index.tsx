@@ -125,7 +125,8 @@ export default function Home() {
                   transition={{ delay: 0.7, duration: 1 }}
                   className="text-base sm:text-lg max-w-md"
                 >
-                  Proyectos del lindote del Diego.
+                  Proyectos del lindote del Diego. Este sera tu rincon personalizado del internet, 
+                  lindo, ayudame a volverlo cada vez mas de tu gusto.
                 </motion.p>
               </div>
         </motion.section>
@@ -154,7 +155,7 @@ export default function Home() {
 
         {/* Footer */}
         <footer className="w-full mt-32 py-10 text-center text-gray-500">
-          © 2025 Salesman. Todos los derechos reservados.
+          © 2025 Salesman.
         </footer>
       </main>
     </Layout>

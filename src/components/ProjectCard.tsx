@@ -30,7 +30,7 @@ export default function ProjectCard({
       onSelect(id);
       return;
     }
-    // Si ya está expandida → navegar al detalle del proyecto
+    // Si ya está expandida, navegar al detalle del proyecto
     router.push(`/projects/${id}`);
   };
 
@@ -48,7 +48,7 @@ export default function ProjectCard({
       style={{
         cursor: "pointer",
         overflow: "hidden",
-        borderRadius: "12px",
+        //borderRadius: "12px", con comentario por si se arrepiente de quitar los bordes curvos
         background: "#F92424",
       }}
     >
