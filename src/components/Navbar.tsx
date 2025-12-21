@@ -92,5 +92,7 @@ export default function Navbar({ visible }: { visible: boolean }) {
         </div>
       )}
     </header>
+
+    
   );
 }
