@@ -3,6 +3,14 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import localFont from "next/font/local";
+
+const Code = localFont({
+  src: "../../public/fonts/Code.otf",
+  weight: "400",
+  style: "normal",
+  variable: "--font-code",
+});
 
 interface ProjectCardProps {
   id: string;
@@ -82,7 +90,7 @@ export default function ProjectCard({
       >
         {isActive && (
           <>
-            <h3 className="text-xl font-semibold mb-2">{title}</h3>
+            <h3 className={`${Code.className} text-xl font-semibold mb-2`}>{title}</h3>
             <p className="text-white-600">{description}</p>
           </>
         )}

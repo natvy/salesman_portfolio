@@ -7,8 +7,8 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { projects } from "../data/projects"; // Tus 4 imágenes y datos
 import localFont from "next/font/local";
-const Audiowide = localFont({
-  src: "../../public/fonts/Audiowide-Regular.ttf",
+const Code = localFont({
+  src: "../../public/fonts/Code.otf",
   weight: "400",
   style: "normal",
   variable: "--font-audiowide",
@@ -58,106 +58,105 @@ export default function Home() {
   };
 
   return (
-    <Layout>
-      <Navbar visible={true} />
+  <Layout>
+    <Navbar visible={true} />
 
-      <main className="min-h-screen pt-10">
-        {/* ===================== HERO SECTION ===================== */}
-        {/* Sección principal con fondo negro a todo lo ancho */}
-        <motion.section
-          exit={{ opacity: 0, y: 40 }}
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative w-screen h-[40vh] min-h-[280px] overflow-hidden" // fondo horizontal completo + padding vertical
+    <main className="pt-10">
+      {/* ===================== HERO SECTION ===================== */}
+      <motion.section
+        exit={{ opacity: 0, y: 40 }}
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="flex flex-col justify-center gap-3 relative w-full max-w-[1100px] mx-auto overflow-hidden px-6"
+        //tamano del hero acorde al viewport
+
+      >
+        {/* ---------- Fondo full width ---------- */}
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+          className="absolute inset-0 flex justify-center"
         >
-          {/* Contenedor centrado que limita el ancho del contenido */}
-              {/* ---------- Imagen de fondo animada ---------- */}
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3, duration: 0.6 }}
-                className="absolute inset-0" // ocupa toda la caja del hero
-              >
-                <Image
-                  src="/images/backgroundHome.jpg"
-                  alt="Home background"
-                  fill
-                  priority
-                  className="object-cover"
-                />
-              </motion.div>
+          <Image
+            src="/images/backgroundHome.jpg"
+            alt="Home background"
+            fill
+            priority
+            className="object-cover"
+          />
+        </motion.div>
 
-              {/* ---------- Cortina roja desde la derecha ---------- */}
-              <motion.div
-                initial={{ x: "100%" }}
-                animate={{ x: "0%" }}
-                transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-                className="absolute top-0 right-0 h-full w-[100%] bg-[#E5203A]/30 pointer-events-none"
-              />
+        {/* ---------- Cortina roja ---------- */}
+        <motion.div
+          initial={{ x: "100%" }}
+          animate={{ x: "0%" }}
+          transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
+          className="absolute inset-0 bg-[#E5203A]/30 pointer-events-none"
+        />
 
-              {/* ---------- Contenedor del texto (sobre la imagen) ---------- */}
-              <div className="relative z-10 h-full flex flex-col justify-center px-8 sm:px-15 text-white gap-3">
-                {/* Título principal */}
-                <motion.h1
-                  initial={{ opacity: 0, x: -50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3, duration: 1 }}
-                  className={`${Audiowide.className} text-4xl sm:text-6xl font-bold`} //asi puedo cambiar las fuentes de mis apartados
-                >
-                  Salesman - Portfolio
-                </motion.h1>
-
-                {/* Subtítulo */}
-                <motion.h2
-                  initial={{ opacity: 0, x: -50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.5, duration: 1 }}
-                  className="text-2xl sm:text-4xl font-semibold"
-                >
-                  Architecture
-                </motion.h2>
-
-                {/* Descripción corta */}
-                <motion.p
-                  initial={{ opacity: 0, x: -50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.7, duration: 1 }}
-                  className="text-base sm:text-lg max-w-md"
-                >
-                  Proyectos del lindote del Diego. Este sera tu rincon personalizado del internet, 
-                  lindo, ayudame a volverlo cada vez mas de tu gusto.
-                </motion.p>
-              </div>
-        </motion.section>
-
-        {/* ===================== PROJECTS GRID ===================== */}
-        {/* Sección de tarjetas de proyectos debajo del hero */}
-        <section className="mx-auto mt-12 max-w-6xl px-6 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, i) => (
-            <div
-              key={project.id}
-              ref={(el) => {
-                cardsRef.current[i] = el; // referencia para animación inicial
-              }}
+        {/* ---------- Contenido alineado con las cards ---------- */}
+        <div className="relative z-100mx-auto max-w-6xl px-6 py-24 text-white">
+          <div className="flex flex-col justify-center gap-3">
+            <motion.h1
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3, duration: 1 }}
+              className={`${Code.className} text-4xl sm:text-6xl font-bold`}
             >
-              <ProjectCard
-                id={project.id}
-                title={project.title}
-                description={project.description}
-                images={project.images[0].src}
-                isActive={activeProject === project.id}
-                onSelect={handleSelect}
-              />
-            </div>
-          ))}
-        </section>
+              Salesman - Portfolio
+            </motion.h1>
 
-        {/* Footer */}
-        <footer className="w-full mt-32 py-10 text-center text-gray-500">
-          © 2025 Salesman.
-        </footer>
-      </main>
-    </Layout>
-  );
+            <motion.h2
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5, duration: 1 }}
+              className="text-2xl sm:text-4xl font-semibold"
+            >
+              Architecture
+            </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.7, duration: 1 }}
+              className="text-base sm:text-lg max-w-md"
+            >
+              Proyectos del lindote del Diego. Este sera tu rincon personalizado
+              del internet, lindo, ayudame a volverlo cada vez mas de tu gusto.
+            </motion.p>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* ===================== PROJECTS GRID ===================== */}
+      <section className="mx-auto mt-12 max-w-6xl px-6 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        {projects.map((project, i) => (
+          <div
+            key={project.id}
+            ref={(el) => {
+              cardsRef.current[i] = el;
+            }}
+          >
+            <ProjectCard
+              id={project.id}
+              title={project.title}
+              description={project.description}
+              images={project.images[0].src}
+              isActive={activeProject === project.id}
+              onSelect={handleSelect}
+            />
+          </div>
+        ))}
+      </section>
+
+      {/* Footer */}
+      <footer className="w-full mt-32 py-10 text-center text-gray-500">
+        © 2025 Salesman.
+      </footer>
+    </main>
+  </Layout>
+);
+
 }
