@@ -45,7 +45,7 @@ export default function AboutMe() {
             initial={{ x: "100%" }}
             animate={{ x: "0%" }}
             transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-            className="absolute top-0 left-[9%] h-full w-[40%] bg-[#E5203A]/50  pointer-events-none"
+            className="absolute top-0 left-[6%] h-full w-[40%] bg-[#E5203A]/50  pointer-events-none"
           />
         </div>
 
@@ -58,7 +58,9 @@ export default function AboutMe() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3, duration: 1 }}
           >
-            <h1 className="text-white text-7xl font-bold">\\\\\\\\\\\\\\\\\\</h1>
+            <h1 className="text-white text-7xl font-bold">
+              \\\\\\\\\\\\\\\\\\
+            </h1>
           </motion.div>
         </div>
 
@@ -89,8 +91,19 @@ export default function AboutMe() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3, duration: 1.5 }}
           >
-            <h2 className="text-white text-4xl font-semibold">Arquitecto</h2>
-            <p className="text-white text-m mt-2 leading-relaxed">
+            <h2 className="
+              text-white
+              text-lg sm:text-2xl md:text-3xl
+              font-semibold
+            ">
+              Arquitecto
+            </h2>
+
+            <p className="
+              text-white
+              text-sm sm:text-base md:text-lg
+              mt-6 leading-relaxed
+            ">
               Disfruto enfocandome en el diseño de espacios inspiradores y
               funcionales, donde la estructura y la luz definen la experiencia
               del habitar.
@@ -145,11 +158,13 @@ export default function AboutMe() {
       </div>
 
       {/* Secciones dinámicas debajo del hero */}
-      <div className="
+      <div
+        className="
   relative z-10 max-w-6xl mx-auto px-12
   mt-24 sm:mt-5 md:mt-40
   text-black
-">
+"
+      >
         {activeSection === "About" && (
           <motion.div
             key="about"
