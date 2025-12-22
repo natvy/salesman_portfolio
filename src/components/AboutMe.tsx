@@ -45,7 +45,7 @@ export default function AboutMe() {
             initial={{ x: "100%" }}
             animate={{ x: "0%" }}
             transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-            className="absolute top-0 left-6 h-full w-[45%] bg-[#E5203A]/50 rounded-lg pointer-events-none"
+            className="absolute top-0 left-[9%] h-full w-[40%] bg-[#E5203A]/50  pointer-events-none"
           />
         </div>
 
@@ -58,7 +58,7 @@ export default function AboutMe() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3, duration: 1 }}
           >
-            <h1 className="text-white text-7xl font-bold">//////////</h1>
+            <h1 className="text-white text-7xl font-bold">\\\\\\\\\\\\\\\\\\</h1>
           </motion.div>
         </div>
 
@@ -71,19 +71,19 @@ export default function AboutMe() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3, duration: 1 }}
           >
-            <h1 className="text-white text-7x1 font-bold">DIEGO RODRIGUEZ</h1>
+            <h1 className="text-white text-7x1 font-bold">DIEGO LOPEZ</h1>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3, duration: 1 }}
           >
-            <h1 className="text-white text-7x1 font-bold">LOPEZ</h1>
+            <h1 className="text-white text-7x1 font-bold">RODRIGUEZ</h1>
           </motion.div>
         </div>
 
         {/* Profesión + descripción */}
-        <div className="absolute left-[10%] bottom-[30%] text-left max-w-sm">
+        <div className="absolute left-[10%] bottom-[25%] text-left max-w-sm">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -100,7 +100,13 @@ export default function AboutMe() {
 
         {/* Barra de navegación dentro del hero */}
         <div className="absolute inset-x-0 top-[90%] z-20 flex justify-center px-4">
-          <div className="relative flex gap-40 px-2 space-x-8">
+          <div
+            className="
+               relative flex flex-wrap justify-center
+               gap-6 sm:gap-10 md:gap-40
+               px-2 w-full max-w-6xl
+             "
+          >
             {sections.map((sec) => {
               const isActive = activeSection === sec;
               return (
@@ -139,7 +145,11 @@ export default function AboutMe() {
       </div>
 
       {/* Secciones dinámicas debajo del hero */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6  text-black">
+      <div className="
+  relative z-10 max-w-6xl mx-auto px-12
+  mt-24 sm:mt-5 md:mt-40
+  text-black
+">
         {activeSection === "About" && (
           <motion.div
             key="about"
@@ -147,7 +157,9 @@ export default function AboutMe() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <h3 className="text-3xl font-bold mb-4">Sobre mí</h3>
+            <h3 className={`${Scrambled.className} text-3xl font-bold mb-4`}>
+              Sobre mí
+            </h3>
             <p>
               Arquitecto enfocado en crear espacios que equilibran forma,
               estructura y experiencia humana, con especial interés en diseño
@@ -163,7 +175,9 @@ export default function AboutMe() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <h3 className="text-3xl font-bold mb-4">Currículum</h3>
+            <h3 className={`${Scrambled.className} text-3xl font-bold mb-4`}>
+              Currículum
+            </h3>
             <p>
               Experiencia en proyectos residenciales y comerciales, dominio de
               herramientas CAD, BIM y visualización arquitectónica.
@@ -177,7 +191,9 @@ export default function AboutMe() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h3 className="text-3xl font-bold mb-4">Servicios</h3>
+            <h3 className={`${Scrambled.className} text-3xl font-bold mb-4`}>
+              Servicios
+            </h3>
             <p>
               Diseño arquitectónico, conceptualización, desarrollo ejecutivo,
               visualización 3D y acompañamiento en obra.
@@ -191,7 +207,9 @@ export default function AboutMe() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h3 className="text-3xl font-bold mb-4">Campos de estudio</h3>
+            <h3 className={`${Scrambled.className} text-3xl font-bold mb-4`}>
+              Campos de estudio
+            </h3>
             <p>
               Urbanismo, arquitectura sostenible, diseño de interiores y
               análisis del espacio habitacional.
@@ -205,7 +223,9 @@ export default function AboutMe() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h3 className="text-3xl font-bold mb-4">Alcances</h3>
+            <h3 className={`${Scrambled.className} text-3xl font-bold mb-4`}>
+              Alcances
+            </h3>
             <p>
               Proyectos a escala local y regional, con capacidad de adaptación a
               distintos contextos y necesidades del cliente.
