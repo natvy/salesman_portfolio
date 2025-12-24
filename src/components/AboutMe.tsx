@@ -24,9 +24,10 @@ export default function AboutMe() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
-      <div className="relative w-screen overflow-hidden">
+      {/* Contenedor centrado como en el index */}
+      <div className="relative w-full max-w-[1100px] mx-auto overflow-hidden px-6">
         {/* Imagen central */}
-        <div className="relative w-screen h-[70vh] overflow-hidden">
+        <div className="relative w-full h-[70vh] overflow-hidden ">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -41,11 +42,12 @@ export default function AboutMe() {
             />
           </motion.div>
 
+          {/* Cortina ajustada al contenedor */}
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: "0%" }}
             transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-            className="absolute top-0 left-[6%] h-full w-[40%] bg-[#E5203A]/50  pointer-events-none"
+            className="absolute top-0 left-0 h-full w-[40%] bg-[#E5203A]/50 pointer-events-none"
           />
         </div>
 
@@ -66,7 +68,7 @@ export default function AboutMe() {
 
         {/* Nombre */}
         <div
-          className={`${Scrambled.className} absolute left-[10%] top-1/3 -translate-y-1/2 text-4xl sm:text-7xl font-light`}
+          className={`${Scrambled.className} absolute left-[10%] top-1/3 -translate-y-1/2 text-4xl sm:text-6xl font-light`}
         >
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -91,19 +93,11 @@ export default function AboutMe() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3, duration: 1.5 }}
           >
-            <h2 className="
-              text-white
-              text-lg sm:text-2xl md:text-3xl
-              font-semibold
-            ">
+            <h2 className="text-white text-lg sm:text-2xl md:text-3xl font-semibold">
               Arquitecto
             </h2>
 
-            <p className="
-              text-white
-              text-sm sm:text-base md:text-lg
-              mt-6 leading-relaxed
-            ">
+            <p className="text-white text-sm sm:text-base md:text-lg mt-6 leading-relaxed">
               Disfruto enfocandome en el diseño de espacios inspiradores y
               funcionales, donde la estructura y la luz definen la experiencia
               del habitar.
@@ -113,28 +107,18 @@ export default function AboutMe() {
 
         {/* Barra de navegación dentro del hero */}
         <div className="absolute inset-x-0 top-[90%] z-20 flex justify-center px-4">
-          <div
-            className="
-               relative flex flex-wrap justify-center
-               gap-6 sm:gap-10 md:gap-40
-               px-2 w-full max-w-6xl
-             "
-          >
+          <div className="relative flex flex-wrap justify-center gap-6 sm:gap-10 md:gap-40 px-2 w-full max-w-6xl">
             {sections.map((sec) => {
               const isActive = activeSection === sec;
               return (
                 <div key={sec} className="relative">
                   <button
                     onClick={() => setActiveSection(sec)}
-                    className={`
-                      ${Scrambled.className}
-                      text-lg sm:text-xl transition-colors
-                      ${
-                        isActive
-                          ? "text-white"
-                          : "text-white/60 hover:text-white"
-                      }
-                    `}
+                    className={`${
+                      Scrambled.className
+                    } text-lg sm:text-xl transition-colors ${
+                      isActive ? "text-white" : "text-white/60 hover:text-white"
+                    }`}
                   >
                     {sec}
                   </button>
@@ -158,13 +142,7 @@ export default function AboutMe() {
       </div>
 
       {/* Secciones dinámicas debajo del hero */}
-      <div
-        className="
-  relative z-10 max-w-6xl mx-auto px-12
-  mt-24 sm:mt-5 md:mt-40
-  text-black
-"
-      >
+      <div className="relative z-10 max-w-6xl mx-auto px-12 mt-24 sm:mt-5 md:mt-20 text-black">
         {activeSection === "About" && (
           <motion.div
             key="about"
@@ -172,14 +150,44 @@ export default function AboutMe() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <h3 className={`${Scrambled.className} text-3xl font-bold mb-4`}>
+            <h3
+              className={`${Scrambled.className} text-3xl font-bold mb-4 max-w-[900px] mx-auto`}
+            >
               Sobre mí
             </h3>
-            <p>
-              Arquitecto enfocado en crear espacios que equilibran forma,
-              estructura y experiencia humana, con especial interés en diseño
-              contemporáneo y soluciones funcionales.
+            <p className="mb-6 max-w-[900px] mx-auto">
+              Desde que tengo memoria, siempre me ha atraído imaginar mis
+              espacios y darles forma, ademas del arte, cuya expresion aplicada 
+              a espacios puede traer todo tipo de emociones. No puedo decir con certeza si nací con talento
+              para ello, pero sí sé que encontraba una satisfacción profunda al
+              ver cómo otros podían admirar y disfrutar lo que yo había
+              concebido.
             </p>
+            <p className="mb-6 max-w-[900px] mx-auto">
+              Cuando descubrí la arquitectura, sentí que era el punto de
+              encuentro entre dos mundos que siempre me habían fascinado: el
+              arte y mi espacio. Entender que un edificio podía ser, al mismo
+              tiempo, inspiracion, una idea, un refugio y una solución concreta me empujó a
+              sumergirme por completo en este camino, sin mirar atrás.
+            </p>
+            <p className="mb-6 max-w-[900px] mx-auto">
+              Hoy diseño espacios con la esperanza de que no solo se vean bien,
+              sino que mejoren la vida de quienes los usan. Construyo para dejar
+              huella, para que cada proyecto tenga sentido y valor en el mundo
+              que habitamos.
+            </p>
+
+            <h1 className="mb-15 max-w-[900px] mx-auto">
+              <span className="mb-6 text-sm text-[#9d9b9c]">Some extra facts</span>
+              <p className="mb-4 max-w-[900px] mx-auto"> Recently, I've been: </p>
+              <p className="mb-3 max-w-[900px] mx-auto"> ☕️ Tomando mas de 3 tazas de cafe al dia. </p>
+              <p className="mb-3 max-w-[900px] mx-auto"> 🐖 Leyendo "Rebelion en la granja". </p>
+              <p className="mb-6 max-w-[900px] mx-auto"> 🧦 Considerando comprar un par de esos clcetines con garantia de por vida. </p>
+              
+            </h1>
+            <h1 className="mb-15 max-w-[900px] mx-auto">
+              <span className="mb-6 text-sm text-[#9d9b9c]">Experience</span>
+             </h1> 
           </motion.div>
         )}
 
