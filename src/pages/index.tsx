@@ -142,7 +142,7 @@ export default function Home() {
         <div
           className="
             absolute inset-x-0 z-20 flex justify-center px-4
-            top-[45%] sm:top-[48%] md:top-[50%] slg:top-[42%]
+            top-[45%] sm:top-[48%] md:top-[50%] slg:top-[37%]
           "
            >
           <div
@@ -163,7 +163,7 @@ export default function Home() {
                     className={`${
                       Code.className
                     } text-lg sm:text-xl transition-colors ${
-                      isActive ? "text-white" : "text-white/60 hover:text-white"
+                      isActive ? "text-white" : "text-white/60 hover:text-white "
                     }`}
                   >
                     {sec}
