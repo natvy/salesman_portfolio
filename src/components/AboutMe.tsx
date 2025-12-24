@@ -61,7 +61,7 @@ export default function AboutMe() {
             transition={{ delay: 0.3, duration: 1 }}
           >
             <h1 className="text-white text-7xl font-bold">
-              \\\\\\\\\\\\\\\\\\
+              
             </h1>
           </motion.div>
         </div>
