@@ -187,6 +187,9 @@ export default function AboutMe() {
             </h1>
             <h1 className="mb-15 max-w-[900px] mx-auto">
               <span className="mb-6 text-sm text-[#9d9b9c]">Experience</span>
+              <p className="mb-3 max-w-[900px] mx-auto"> - Tres años de relacion con una mujer dificil. </p>
+              <p className="mb-3 max-w-[900px] mx-auto"> - Toda la trayectoria para ser el ceo de Microsoft. </p>
+              <p className="mb-6 max-w-[900px] mx-auto"> - Ya casi llega a maistro de la obra. </p>
              </h1> 
           </motion.div>
         )}
