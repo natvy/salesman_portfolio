@@ -1,9 +1,11 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { useRouter } from "next/router";
 
-export default function IntroPage() {
-  const router = useRouter();
+interface IntroPageProps {
+  onFinish: () => void;
+}
+
+export default function IntroPage({ onFinish }: IntroPageProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const logoRef = useRef<HTMLImageElement | null>(null);
   const ranRef = useRef(false);
@@ -28,15 +30,19 @@ export default function IntroPage() {
         scale: 0.5,
         duration: 0.8,
       })
-      .to(container, { opacity: 0, duration: 0.5 })
+      .to(container, {
+        opacity: 0,
+        duration: 0.5,
+        pointerEvents: "none",
+      })
       .add(() => {
-        void router.replace("/");
+        onFinish();
       });
 
     return () => {
       tl.kill();
     };
-  }, [router]);
+  }, [onFinish]);
 
   return (
     <div

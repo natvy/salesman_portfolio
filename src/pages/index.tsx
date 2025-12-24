@@ -8,6 +8,8 @@ import { motion } from "framer-motion";
 import { projects } from "../data/projects"; // Tus 4 imágenes y datos
 import localFont from "next/font/local";
 import { useRouter } from "next/router";
+import intro from "@/components/intro";
+
 
 const Code = localFont({
   src: "../../public/fonts/Code.otf",
@@ -23,7 +25,9 @@ export default function Home() {
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [activeSection, setActiveSection] = useState("Architectural projects");
-  const router = useRouter();
+  const [showIntro, setShowIntro] = useState(true);
+
+  
 
  
 
@@ -142,7 +146,7 @@ export default function Home() {
         <div
           className="
             absolute inset-x-0 z-20 flex justify-center px-4
-            top-[45%] sm:top-[48%] md:top-[50%] lg:top-[50%] slg:top-[40%]
+            top-[45%] sm:top-[55%] md:top-[50%] lg:top-[50%] slg:top-[40%]
           "
            >
           <div
