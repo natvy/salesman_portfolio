@@ -10,7 +10,6 @@ import localFont from "next/font/local";
 import { useRouter } from "next/router";
 import intro from "@/components/intro";
 
-
 const Code = localFont({
   src: "../../public/fonts/Code.otf",
   weight: "400",
@@ -26,10 +25,6 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [activeSection, setActiveSection] = useState("Architectural projects");
   const [showIntro, setShowIntro] = useState(true);
-
-  
-
- 
 
   // Animación inicial de entrada de las cards
   useEffect(() => {
@@ -144,19 +139,19 @@ export default function Home() {
 
         {/* Barra de navegación dentro del hero */}
         <div
-          className="
-            absolute inset-x-0 z-20 flex justify-center px-4
-            top-[45%] sm:top-[55%] md:top-[50%] lg:top-[50%] slg:top-[40%]
-          "
-           >
+  className="
+    absolute inset-x-0 z-20 flex justify-center px-4
+    bottom-96 sm:bottom-80 md:bottom-[350px] lg:bottom-[350px]
+  "
+>
+
           <div
             className="
-            relative flex w-full max-w-5xl px-2 
-            flex-wrap justify-center gap-6
-            sm:gap-10 
-            md:gap-40 
-            lg:flex-nowrap lg:justify-between lg:gap-0
-            "
+      relative flex w-full max-w-5xl px-2
+      flex-wrap justify-center gap-6
+      sm:gap-5
+      lg:flex-nowrap lg:justify-between lg:gap-0
+    "
           >
             {sections.map((sec) => {
               const isActive = activeSection === sec;
@@ -167,7 +162,7 @@ export default function Home() {
                     className={`${
                       Code.className
                     } text-sm sm:text-xl transition-colors ${
-                      isActive ? "text-white" : "text-white/60 hover:text-white "
+                      isActive ? "text-white" : "text-white/60 hover:text-white"
                     }`}
                   >
                     {sec}
