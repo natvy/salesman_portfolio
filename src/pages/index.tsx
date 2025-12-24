@@ -14,10 +14,13 @@ const Code = localFont({
   variable: "--font-audiowide",
 });
 
+const sections = ["Architectural projects", "Artistic projects"];
+
 export default function Home() {
   const [activeProject, setActiveProject] = useState<string | null>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const [activeSection, setActiveSection] = useState("Architectural projects");
 
   // Animación inicial de entrada de las cards
   useEffect(() => {
@@ -58,105 +61,192 @@ export default function Home() {
   };
 
   return (
-  <Layout>
-    <Navbar visible={true} />
+    <Layout>
+      <Navbar visible={true} />
 
-    <main className="pt-10">
-      {/* ===================== HERO SECTION ===================== */}
-      <motion.section
-        exit={{ opacity: 0, y: 40 }}
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="flex flex-col justify-center gap-3 relative w-full max-w-[1100px] mx-auto overflow-hidden px-6"
-        //tamano del hero acorde al viewport
-
-      >
-        {/* ---------- Fondo full width ---------- */}
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3, duration: 0.6 }}
-          className="absolute inset-0 flex justify-center"
+      <main className="pt-10">
+        {/* ===================== HERO SECTION ===================== */}
+        <motion.section
+          exit={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="flex flex-col justify-center gap-3 relative w-full max-w-[1100px] mx-auto overflow-hidden px-6"
+          //tamano del hero acorde al viewport
         >
-          <Image
-            src="/images/backgroundHome.jpg"
-            alt="Home background"
-            fill
-            priority
-            className="object-cover"
+          {/* ---------- Fondo full width ---------- */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            className="absolute inset-0 flex justify-center"
+          >
+            <Image
+              src="/images/backgroundHome.jpg"
+              alt="Home background"
+              fill
+              priority
+              className="object-cover"
+            />
+          </motion.div>
+
+          {/* ---------- Cortina roja ---------- */}
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: "0%" }}
+            transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
+            className="absolute inset-0 bg-[#E5203A]/30 pointer-events-none"
           />
-        </motion.div>
 
-        {/* ---------- Cortina roja ---------- */}
-        <motion.div
-          initial={{ x: "100%" }}
-          animate={{ x: "0%" }}
-          transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-          className="absolute inset-0 bg-[#E5203A]/30 pointer-events-none"
-        />
+          {/* ---------- Contenido alineado con las cards ---------- */}
+          <div className="relative z-100mx-auto max-w-6xl px-6 py-24 text-white">
+            <div className="flex flex-col justify-center gap-3">
+              <motion.h1
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3, duration: 1 }}
+                className={`${Code.className} text-4xl sm:text-6xl font-bold`}
+              >
+                Salesman - Portfolio
+              </motion.h1>
 
-        {/* ---------- Contenido alineado con las cards ---------- */}
-        <div className="relative z-100mx-auto max-w-6xl px-6 py-24 text-white">
-          <div className="flex flex-col justify-center gap-3">
-            <motion.h1
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3, duration: 1 }}
-              className={`${Code.className} text-4xl sm:text-6xl font-bold`}
-            >
-              Salesman - Portfolio
-            </motion.h1>
+              <motion.h2
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5, duration: 1 }}
+                className="text-2xl sm:text-4xl font-semibold"
+              >
+                Architecture
+              </motion.h2>
 
-            <motion.h2
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5, duration: 1 }}
-              className="text-2xl sm:text-4xl font-semibold"
-            >
-              Architecture
-            </motion.h2>
+              <motion.p
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.7, duration: 1 }}
+                className="text-base sm:text-lg max-w-md"
+              >
+                Proyectos del lindote del Diego. Este sera tu rincon
+                personalizado del internet, lindo, ayudame a volverlo cada vez
+                mas de tu gusto.
+              </motion.p>
+            </div>
+          </div>
+        </motion.section>
 
-            <motion.p
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.7, duration: 1 }}
-              className="text-base sm:text-lg max-w-md"
-            >
-              Proyectos del lindote del Diego. Este sera tu rincon personalizado
-              del internet, lindo, ayudame a volverlo cada vez mas de tu gusto.
-            </motion.p>
+        {/* Barra de navegación dentro del hero */}
+        <div
+          className="
+            absolute inset-x-0 z-20 flex justify-center px-4
+            top-[45%] sm:top-[48%] md:top-[50%]
+          "
+           >
+          <div
+            className="
+            relative flex w-full max-w-5xl px-2 
+            flex-wrap justify-center gap-6
+            sm:gap-10 
+            md:gap-40 
+            lg:flex-nowrap lg:justify-between lg:gap-0
+            "
+          >
+            {sections.map((sec) => {
+              const isActive = activeSection === sec;
+              return (
+                <div key={sec} className="relative">
+                  <button
+                    onClick={() => setActiveSection(sec)}
+                    className={`${
+                      Code.className
+                    } text-lg sm:text-xl transition-colors ${
+                      isActive ? "text-white" : "text-white/60 hover:text-white"
+                    }`}
+                  >
+                    {sec}
+                  </button>
+
+                  {isActive && (
+                    <motion.div
+                      layoutId="about-hero-indicator"
+                      className="absolute -bottom-2 left-0 right-0 h-[2px] bg-white"
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 30,
+                      }}
+                    />
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
-      </motion.section>
 
-      {/* ===================== PROJECTS GRID ===================== */}
-      <section className="mx-auto mt-12 max-w-6xl px-6 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        {projects.map((project, i) => (
-          <div
-            key={project.id}
-            ref={(el) => {
-              cardsRef.current[i] = el;
-            }}
-          >
-            <ProjectCard
-              id={project.id}
-              title={project.title}
-              description={project.description}
-              images={project.images[0].src}
-              isActive={activeProject === project.id}
-              onSelect={handleSelect}
-            />
-          </div>
-        ))}
-      </section>
+        {/* Secciones dinámicas debajo del hero */}
+        <div className="relative z-10 w-full  mt-24 sm:mt-5 md:mt-10 text-black">
+          {activeSection === "Architectural projects" && (
+            <motion.div
+              key="architectural-projects"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              {/* ===================== PROJECTS GRID ===================== */}
+              <section
+                className="
+                mt-10 w-full 
+                grid gap-6 
+                grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 
+                px-4 sm:px-6
+                lg:max-w-6xl lg:mx-auto"
+              >
+                {projects.map((project, i) => (
+                  <div
+                    key={project.id}
+                    ref={(el) => {
+                      cardsRef.current[i] = el;
+                    }}
+                  >
+                    <ProjectCard
+                      id={project.id}
+                      title={project.title}
+                      description={project.description}
+                      images={project.images[0].src}
+                      isActive={activeProject === project.id}
+                      onSelect={handleSelect}
+                    />
+                  </div>
+                ))}
+              </section>
+            </motion.div>
+          )}
 
-      {/* Footer */}
-      <footer className="w-full mt-32 py-10 text-center text-gray-500">
-        © 2025 Salesman.
-      </footer>
-    </main>
-  </Layout>
-);
+          {activeSection === "Artistic projects" && (
+            <motion.div
+              key="artistic-projects"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <h3
+                className={`${Code.className} text-3xl font-bold mb-4 max-w-[900px] mx-auto`}
+              >
+                Cuando las cards de esto esten listas...
+              </h3>
+              <p className="mb-6 max-w-[900px] mx-auto">
+                Aqui mi tilin agrega todos sus proyectos artisticos qque no
+                necesariamente tienen que ver con la carrera, si no con el
+                preciso placer que crear por gusto, materializar lo abstracto y
+                fascinante de las ideas en un solo lienzo.
+              </p>
+            </motion.div>
+          )}
+        </div>
 
+        {/* Footer */}
+        <footer className="w-full mt-32 py-10 text-center text-gray-500">
+          © 2025 Salesman.
+        </footer>
+      </main>
+    </Layout>
+  );
 }

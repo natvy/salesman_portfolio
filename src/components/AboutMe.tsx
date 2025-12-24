@@ -47,7 +47,7 @@ export default function AboutMe() {
             initial={{ x: "100%" }}
             animate={{ x: "0%" }}
             transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-            className="absolute top-0 left-0 h-full w-[40%] bg-[#E5203A]/50 pointer-events-none"
+            className="absolute top-0 left-10 h-full w-[45%] bg-[#E5203A]/50 pointer-events-none"
           />
         </div>
 
@@ -177,7 +177,7 @@ export default function AboutMe() {
               huella, para que cada proyecto tenga sentido y valor en el mundo
               que habitamos.
             </p>
-            <hr className="border-t border-neutral-300 my-8" /> 
+             
             <h1 className="mb-15 max-w-[900px] mx-auto">
               <span className="mb-6 text-sm text-[#9d9b9c]">
                 Some extra facts
@@ -186,21 +186,23 @@ export default function AboutMe() {
                 {" "}
                 Recently, I've been:{" "}
               </p>
-              <p className="mb-3 max-w-[900px] mx-auto">
+              
+              <p className="mb-1 max-w-[900px] mx-auto">
                 {" "}
                 ☕️ Tomando mas de 3 tazas de cafe al dia.{" "}
               </p>
-              <p className="mb-3 max-w-[900px] mx-auto">
+              <hr className="border-t border-neutral-300 my-1" />
+              <p className="mb-1 max-w-[900px] mx-auto">
                 {" "}
                 🐖 Leyendo "Rebelion en la granja".{" "}
               </p>
+              <hr className="border-t border-neutral-300 my-1" />
               <p className="mb-6 max-w-[900px] mx-auto">
                 {" "}
                 🧦 Considerando comprar un par de esos clcetines con garantia de
                 por vida.{" "}
               </p>
             </h1>
-            <hr className="border-t border-neutral-300 my-8" /> 
             
             <h1 className="mb-15 max-w-[900px] mx-auto">
               <span className="mb-6 text-sm text-[#9d9b9c]">Experience</span>
@@ -209,23 +211,25 @@ export default function AboutMe() {
                 Con 20 años de servicio a la comunidad, entre mis skills
                 destacan:{" "}
               </p>
-              <p className="mb-3 max-w-[900px] mx-auto">
+              <p className="mb-1 max-w-[900px] mx-auto">
                 {" "}
-                - Tres años de relacion con una mujer dificil.{" "}
+                - Tres años de relacion con una mujer dificil.{" "} 
+
               </p>
-              <p className="mb-3 max-w-[900px] mx-auto">
+              <hr className="border-t border-neutral-300 my-1" />
+              <p className="mb-1 max-w-[900px] mx-auto">
                 {" "}
                 - Toda la trayectoria para ser el ceo de Microsoft.{" "}
               </p>
+              <hr className="border-t border-neutral-300 my-1" />
               <p className="mb-6 max-w-[900px] mx-auto">
                 {" "}
                 - Ya casi llega a maistro de la obra.{" "}
               </p>
             </h1>
-            <hr className="border-t border-neutral-300 my-8" /> 
             <h1 className="mb-15 max-w-[900px] mx-auto">
               <span className="mb-6 text-sm text-[#9d9b9c]">Education</span>
-              <p className="mb-4 max-w-[900px] mx-auto">
+              <p className="mb-1 max-w-[900px] mx-auto">
                 {" "}
                 Estudios de arquitectura en la Universidad de Sonora,
                 Hermosillo.{" "}
