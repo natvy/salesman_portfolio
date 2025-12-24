@@ -141,7 +141,7 @@ export default function Home() {
         <div
   className="
     absolute inset-x-0 z-20 flex justify-center px-4
-    bottom-96 sm:bottom-80 md:bottom-[350px] lg:bottom-[350px]
+    bottom-96 sm:bottom-80 md:bottom-[350px] lg:bottom-[350px] xl:bottom-[400px]
   "
 >
 
