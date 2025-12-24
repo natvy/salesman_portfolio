@@ -162,7 +162,7 @@ export default function Home() {
                     onClick={() => setActiveSection(sec)}
                     className={`${
                       Code.className
-                    } text-lg sm:text-xl transition-colors ${
+                    } text-sm sm:text-xl transition-colors ${
                       isActive ? "text-white" : "text-white/60 hover:text-white "
                     }`}
                   >
