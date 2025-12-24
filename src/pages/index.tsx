@@ -142,7 +142,7 @@ export default function Home() {
         <div
           className="
             absolute inset-x-0 z-20 flex justify-center px-4
-            top-[45%] sm:top-[48%] md:top-[50%] lg:top-[45%]
+            top-[45%] sm:top-[48%] md:top-[50%] slg:top-[42%]
           "
            >
           <div
