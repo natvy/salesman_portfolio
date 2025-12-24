@@ -7,6 +7,8 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { projects } from "../data/projects"; // Tus 4 imágenes y datos
 import localFont from "next/font/local";
+import { useRouter } from "next/router";
+
 const Code = localFont({
   src: "../../public/fonts/Code.otf",
   weight: "400",
@@ -21,6 +23,9 @@ export default function Home() {
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [activeSection, setActiveSection] = useState("Architectural projects");
+  const router = useRouter();
+
+ 
 
   // Animación inicial de entrada de las cards
   useEffect(() => {
