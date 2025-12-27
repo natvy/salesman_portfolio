@@ -3,7 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import localFont from "next/font/local";
 const Scrambled = localFont({
-  src: "../../public/fonts/Code.otf",
+  src: "../../public/fonts/Square.ttf",
   weight: "400",
   style: "normal",
   variable: "--font-scrambled",
@@ -13,7 +13,7 @@ export default function Navbar({ visible }: { visible: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-gray-200 shadow-sm">
       <nav className="max-w-[1130px] mx-auto px-6 h-16 flex items-center">
         
         {/* Logo a la izquierda */}
@@ -21,7 +21,7 @@ export default function Navbar({ visible }: { visible: boolean }) {
           href="/"
           className="h-10 flex items-center hover:opacity-80 transition-opacity duration-200"
         >
-          <img src="/logo.png" alt="Logo" className="h-10 w-auto ml-2" />
+          <img src="/logow.png" alt="Logo" className="h-10 w-auto ml-2" />
         </Link>
 
         {/* Empuja todo lo demás a la derecha */}
@@ -31,25 +31,25 @@ export default function Navbar({ visible }: { visible: boolean }) {
           <div className="hidden md:flex gap-8">
             <Link
               href="/"
-              className={`${Scrambled.className} text-gray-700 font-medium hover:text-black transition-transform duration-200 hover:scale-105`}
+              className={`${Scrambled.className} text-white font-medium hover:text-[#E5203A] transition-transform duration-200 hover:scale-105`}
             >
               Home
             </Link>
             <Link
               href="/projects"
-              className={`${Scrambled.className} text-gray-700 font-medium hover:text-black transition-transform duration-200 hover:scale-105`}
+              className={`${Scrambled.className} text-white font-medium hover:text-[#E5203A] transition-transform duration-200 hover:scale-105`}
             >
               Projects
             </Link>
             <Link
               href="/about-me"
-              className={`${Scrambled.className} text-gray-700 font-medium hover:text-black transition-transform duration-200 hover:scale-105`}
+              className={`${Scrambled.className} text-white font-medium hover:text-[#E5203A] transition-transform duration-200 hover:scale-105`}
             >
               About me
             </Link>
             <Link
               href="/contact"
-              className={`${Scrambled.className} text-gray-700 font-medium hover:text-black transition-transform duration-200 hover:scale-105`}
+              className={`${Scrambled.className} text-white font-medium hover:text-[#E5203A] transition-transform duration-200 hover:scale-105`}
             >
               Contact
             </Link>

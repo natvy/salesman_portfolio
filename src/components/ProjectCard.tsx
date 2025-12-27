@@ -5,11 +5,17 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import localFont from "next/font/local";
 
-const Code = localFont({
-  src: "../../public/fonts/Code.otf",
+const Outward = localFont({
+  src: "../../public/fonts/outward.ttf",
   weight: "400",
   style: "normal",
-  variable: "--font-code",
+  variable: "--font-outward",
+});
+const Geist = localFont({
+  src: "../../public/fonts/Geist.ttf",
+  weight: "400",
+  style: "normal",
+  variable: "--font-geist",
 });
 
 interface ProjectCardProps {
@@ -90,8 +96,8 @@ export default function ProjectCard({
       >
         {isActive && (
           <>
-            <h3 className={`${Code.className} text-xl font-semibold mb-2`}>{title}</h3>
-            <p className="text-white-600">{description}</p>
+            <h3 className={`${Outward.className} text-[80px] font-semibold mb-[1px]`}>{title}</h3>
+            <p className="text-white-600 mb-0">{description}</p>
           </>
         )}
       </motion.div>
