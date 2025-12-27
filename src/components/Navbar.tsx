@@ -13,7 +13,7 @@ export default function Navbar({ visible }: { visible: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-gray-200 shadow-sm">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-black backdrop-blur-md border-b border-gray-200 shadow-sm">
       <nav className="max-w-[1130px] mx-auto px-6 h-16 flex items-center">
         
         {/* Logo a la izquierda */}
@@ -21,7 +21,7 @@ export default function Navbar({ visible }: { visible: boolean }) {
           href="/"
           className="h-10 flex items-center hover:opacity-80 transition-opacity duration-200"
         >
-          <img src="/logow.png" alt="Logo" className="h-10 w-auto ml-2" />
+          <img src="/logo.png" alt="Logo" className="h-10 w-auto ml-2" />
         </Link>
 
         {/* Empuja todo lo demás a la derecha */}
@@ -31,25 +31,25 @@ export default function Navbar({ visible }: { visible: boolean }) {
           <div className="hidden md:flex gap-8">
             <Link
               href="/"
-              className={`${Scrambled.className} text-white font-medium hover:text-[#E5203A] transition-transform duration-200 hover:scale-105`}
+              className={`${Scrambled.className} text-white font-medium hover:text-[#FF2C65] transition-transform duration-200 hover:scale-105`}
             >
               Home
             </Link>
             <Link
               href="/projects"
-              className={`${Scrambled.className} text-white font-medium hover:text-[#E5203A] transition-transform duration-200 hover:scale-105`}
+              className={`${Scrambled.className} text-white font-medium hover:text-[#FF2C65] transition-transform duration-200 hover:scale-105`}
             >
               Projects
             </Link>
             <Link
               href="/about-me"
-              className={`${Scrambled.className} text-white font-medium hover:text-[#E5203A] transition-transform duration-200 hover:scale-105`}
+              className={`${Scrambled.className} text-white font-medium hover:text-[#FF2C65] transition-transform duration-200 hover:scale-105`}
             >
               About me
             </Link>
             <Link
               href="/contact"
-              className={`${Scrambled.className} text-white font-medium hover:text-[#E5203A] transition-transform duration-200 hover:scale-105`}
+              className={`${Scrambled.className} text-white font-medium hover:text-[#FF2C65] transition-transform duration-200 hover:scale-105`}
             >
               Contact
             </Link>
@@ -71,29 +71,30 @@ export default function Navbar({ visible }: { visible: boolean }) {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-white/90 backdrop-blur-md border-t border-gray-200 shadow-md">
+        <div className="md:hidden bg-black/90 backdrop-blur-md border-t border-gray-200 shadow-md">
+
           <div className="flex flex-col px-6 py-4 gap-4">
             <Link
               href="/"
-              className="text-gray-700 font-medium hover:text-black transition-transform duration-200 hover:scale-105"
+              className={`${Scrambled.className} text-white-700 font-medium hover:text-black transition-transform duration-200 hover:scale-105`}
             >
               Home
             </Link>
             <Link
               href="/projects"
-              className="text-gray-700 font-medium hover:text-black transition-transform duration-200 hover:scale-105"
+              className={`${Scrambled.className} text-white-700 font-medium hover:text-black transition-transform duration-200 hover:scale-105`}
             >
               Projects
             </Link>
             <Link
               href="/about-me"
-              className="text-gray-700 font-medium hover:text-black transition-transform duration-200 hover:scale-105"
+              className={`${Scrambled.className} text-white-700 font-medium hover:text-black transition-transform duration-200 hover:scale-105`}
             >
               About me
             </Link>
             <Link
               href="/contact"
-              className="text-gray-700 font-medium hover:text-black transition-transform duration-200 hover:scale-105"
+              className={`${Scrambled.className} text-white-700 font-medium hover:text-black transition-transform duration-200 hover:scale-105`}
             >
               Contact
             </Link>

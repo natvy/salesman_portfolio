@@ -120,7 +120,7 @@ export default function Home() {
             initial={{ x: "100%" }}
             animate={{ x: "0%" }}
             transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-            className="absolute inset-0 bg-[#E5203A]/30 pointer-events-none"
+            className="absolute inset-0 bg-[#FF2C65]/30 pointer-events-none"
           />
 
           {/* ---------- Contenido alineado con las cards ---------- */}
@@ -236,7 +236,7 @@ export default function Home() {
                 className="
                 mt-10 w-full 
                 grid gap-6 
-                grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 
+                grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 
                 px-4 sm:px-6
                 lg:max-w-6xl lg:mx-auto"
               >
@@ -254,6 +254,7 @@ export default function Home() {
                       images={project.images[0].src}
                       isActive={activeProject === project.id}
                       onSelect={handleSelect}
+                      number={project.id}
                     />
                   </div>
                 ))}

@@ -17,7 +17,7 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: "p1",
+    id: "PJCT 00.1",
     title: "Project 1",
     description:
       "A concise architectural proposal focused on intent, constraints, and outcome...",
@@ -40,7 +40,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: "p2",
+    id: "PJCT 00.2",
     title: "Project 2",
     description:
       "A visual-first project where spatial clarity replaces ornament as the main narrative device.",
@@ -63,7 +63,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: "p3",
+    id: "PJCT 00.3",
     title: "Project 3",
     description:
       "Less decoration, more structure. An exercise in reduction and spatial discipline.",
@@ -86,7 +86,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: "p4",
+    id: "PJCT 00.4",
     title: "Project 4",
     description:
       "A system-level solution developed as a coherent whole rather than a collection of isolated features.",

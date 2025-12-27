@@ -47,7 +47,7 @@ export default function AboutMe() {
             initial={{ x: "100%" }}
             animate={{ x: "0%" }}
             transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-            className="absolute top-0 left-10 h-full w-[45%] bg-[#E5203A]/50 pointer-events-none"
+            className="absolute top-0 left-10 h-full w-[45%] bg-[#FF2C65]/50 pointer-events-none"
           />
         </div>
 
