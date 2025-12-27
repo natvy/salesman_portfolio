@@ -21,7 +21,7 @@ export default function Navbar({ visible }: { visible: boolean }) {
           href="/"
           className="h-10 flex items-center hover:opacity-80 transition-opacity duration-200"
         >
-          <img src="/logo.png" alt="Logo" className="h-10 w-auto ml-2" />
+          <img src="/logow.png" alt="Logo" className="h-10 w-auto ml-2" />
         </Link>
 
         {/* Empuja todo lo demás a la derecha */}

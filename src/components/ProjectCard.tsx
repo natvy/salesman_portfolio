@@ -68,6 +68,7 @@ export default function ProjectCard({
             style={{ transform: "rotate(270deg)" }}
           >
             {number}
+            
           </span>
         </div>
 
@@ -81,7 +82,7 @@ export default function ProjectCard({
         >
           {/* Pestaña rosa superior */}
           <div className="bg-[#ff2c65] w-full h-12 flex items-center justify-center">
-            <img src="/logow.png" alt="Logo" className="h-6 w-auto" />
+            <img src="/logo.png" alt="Logo" className="h-6 w-auto" />
           </div>
 
           {/* Contenido expandido */}
