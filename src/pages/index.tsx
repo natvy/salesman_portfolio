@@ -10,7 +10,7 @@ import { projects } from "@/data/projects";
 
 export default function Home() {
 
-  const [activeProject, setActiveProject] = useState<string | null>(null);
+  const [activeProject, setActiveProject] = useState<string | null>(projects[0]?.id ?? null);
 
   const [activeSection, setActiveSection] = useState(
     "Architectural projects"

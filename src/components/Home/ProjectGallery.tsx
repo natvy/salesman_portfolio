@@ -11,40 +11,16 @@ interface ProjectGalleryProps {
 export default function ProjectGallery({
   images,
 }: ProjectGalleryProps) {
-  const galleryRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      galleryRef.current?.scrollTo({
-        left: -300,
-        behavior: "instant",
-      });
-    }, 50);
-
-    return () => clearTimeout(timeout);
-  }, []);
-
   return (
-    <section
-      className="
-        w-screen
-        relative
-        left-1/2
-        right-1/2
-        -ml-[50vw]
-        -mr-[50vw]
-        mt-2
-      "
-    >
+    <section className="relative mt-2">
       <div
-        ref={galleryRef}
         className="
           flex
           gap-8
 
           overflow-x-auto
 
-          px-16
+          px-6
           pb-6
 
           snap-x
