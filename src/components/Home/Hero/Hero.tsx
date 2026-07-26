@@ -6,7 +6,7 @@ import localFont from "next/font/local";
 
 
 const Square = localFont({
-  src: "../../fonts/Square.ttf",
+  src: "../../../fonts/Geist.ttf",
   weight: "600",
   style: "normal",
   variable: "--font-scrambled",
@@ -15,7 +15,7 @@ const Square = localFont({
 interface HeroProps {
   activeSection: string;
   setActiveSection: (section: string) => void;
-  navbarInverted: int;
+  navbarInverted: boolean;
   setNavbarInverted: (value: boolean) => void;
 }
 
@@ -59,7 +59,7 @@ export default function Hero({
         className="absolute inset-0 flex justify-center"
       >
         <Image
-          src="/images/backgroundHome.jpg"
+          src="/images/1.png"
           alt="Home background"
           fill
           priority
@@ -82,35 +82,10 @@ export default function Hero({
       />*/}
 
       {/* Contenido */}
-      <div className="relative z-100mx-auto max-w-6xl px-11 py-24 text-white">
+      <div className="relative z-100mx-auto max-w-6xl px-11 py-64 text-white">
         <div className="flex items-start gap-12">
-          <motion.h1
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3, duration: 1 }}
-            className={`${Square.className} text-6xl font-bold leading-[0.85] flex flex-col text-[#FFFAFA]`}
-          >
-            <span>SAL</span>
-            <span>ESM</span>
-            <span>AN</span>
-            <span>POR</span>
-            <span>TFO</span>
-            <span>LIO</span>
-          </motion.h1>
-
           <div className="flex flex-col gap-4 max-w-xl ml-12">
-            <motion.h2
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5, duration: 1 }}
-              className={`${Square.className} text-2xl sm:text-5xl font-semibold `}
-            >
-              <span className="inline whitespace-nowrap max-w-screen-2xl ">
-                SALESMAN - PORTFOLIO
-              </span>
-              <span className="block">Architecture</span>
-            </motion.h2>
-
+{/*
             <motion.p
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -121,6 +96,7 @@ export default function Hero({
               personalizado del internet, lindo, ayudame a volverlo cada vez
               mas de tu gusto.
             </motion.p>
+            */}
           </div>
         </div>
 

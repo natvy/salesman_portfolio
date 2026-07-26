@@ -3,7 +3,7 @@ import { SECTIONS, SectionKey } from "./constants";
 import localFont from "next/font/local";
 
 const Square = localFont({
-  src: "../../fonts/Square.ttf",
+  src: "../../fonts/Geist.ttf",
   weight: "600",
   style: "normal",
   variable: "--font-scrambled",
@@ -17,7 +17,7 @@ interface Props {
 export default function AboutNavigation({ activeSection, onChange }: Props) {
   return (
     <div className={`${Square.className} absolute inset-x-0 top-[90%] flex justify-center`}>
-      <div className="flex gap-10">
+      <div className="flex gap-32">
         {SECTIONS.map((sec) => {
           const active = sec === activeSection;
           return (

@@ -5,8 +5,8 @@ import AboutNavigation from "./AboutNav";
 import { SectionKey } from "./constants";
 
 const Scrambled = localFont({
-  src: "../../fonts/Square.ttf",
-  weight: "600",
+  src: "../../fonts/Geist.ttf",
+  weight: "400",
   style: "normal",
   variable: "--font-scrambled",
 });
@@ -18,7 +18,7 @@ interface Props {
 
 export default function AboutHero({ activeSection, onSectionChange }: Props) {
   return (
-    <div className="relative w-full max-w-[1100px] mx-auto overflow-hidden px-6 -mt-[80px] mb-4 h-[70vh] sm:h-[60vh] md:h-[55vh] lg:h-[50vh] xl:h-[70vh]">
+    <div className="relative w-full max-w-[1100px] mx-auto overflow-hidden px-6 -mt-[80px] mb-4 h-[70vh] sm:h-[60vh] md:h-[30vh] lg:h-[10vh] xl:h-[70vh]">
       {/* Imagen */}
       <div className="relative w-full h-[70vh] overflow-hidden">
         <motion.div
@@ -46,16 +46,15 @@ export default function AboutHero({ activeSection, onSectionChange }: Props) {
       {/* Nombre */}
       <div className={`${Scrambled.className} absolute left-[10%] top-10 `}>
         <h5 className="text-black text-3xl mb-10">2005.11.15</h5>
-        <h1 className="text-5xl font-semibold">DIEGO-LOPEZ</h1>
-        <h1 className="text-5xl font-bold">RODRIGUEZ--</h1>
+        <h1 className="text-4xl font-bold">DIEGO-LOPEZ</h1>
       </div>
 
       {/* Profesión */}
       <div className="absolute left-[10%] bottom-[20%] max-w-sm">
-        <h2 className={`${Scrambled.className} text-3xl mb-2`}>
+        <h2 className={`${Scrambled.className} text-1md mb-2`}>
           ARQUITECTO
         </h2>
-        <p className="text-lg text-justify max-w-[275px]">
+        <p className="text-md text-justify max-w-[300px]">
           Disfruto enfocandome en el diseño de espacios inspiradores y
           funcionales, donde la estructura y la luz definen la experiencia
           del habitar.

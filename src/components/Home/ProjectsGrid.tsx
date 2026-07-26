@@ -1,14 +1,16 @@
 // src/components/Home/ProjectsGrid.tsx
+
 import { motion } from "framer-motion";
-import ProjectCard from "../ProjectCard/ProjectCard";
-import { Project } from "../../data/projects";
 import localFont from "next/font/local";
 
+import { Project } from "@/data/projects";
+import ProjectRow from "./ProjectRow";
+
 const Square = localFont({
-  src: "../../fonts/Square.ttf",
+  src: "../../fonts/Geist.ttf",
   weight: "600",
   style: "normal",
-  variable: "--font-scrambled",
+  variable: "--font-square",
 });
 
 interface ProjectsGridProps {
@@ -23,37 +25,49 @@ export default function ProjectsGrid({
   setActiveProject,
 }: ProjectsGridProps) {
   return (
-    <motion.div
-      key="architectural-projects"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
+    <motion.section
+      key="projects-overview"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.45 }}
+      className="w-full"
     >
-      <h3 className={`${Square.className} text-5xl font-bold mb-4 max-w-[1080px] mx-auto `}>
-        OVERVIEW
-      </h3>
-      <p className="mb-6 max-w-[1080px] mx-auto">
-        Vista rapida a los proyectos y conceptos para darte una idea de mi enfoque, estetica e ideas que quiero proyectar.
-      </p>
+      {/* Encabezado */}
 
-      <section className="mt-10 w-full grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 px-4 sm:px-6 lg:max-w-6xl lg:mx-auto" style={{ maxWidth: "1160px", margin: "40px auto" }}>
-        {projects.map((project) => {
-          const isActive = activeProject === project.id;
-          return (
-            <div key={project.id} className={isActive ? "lg:col-span-2" : ""}>
-              <ProjectCard
-                id={project.id}
-                title={project.title}
-                description={project.description}
-                images={project.images[0].src}
-                number={project.id}
-                isActive={isActive}
-                onSelect={setActiveProject}
-              />
-            </div>
-          );
-        })}
-      </section>
-    </motion.div>
+      <div className="max-w-[1130px] mx-auto px-6 mb-14">
+        <h2 className={`${Square.className} text-5xl mb-5`}>
+          OVERVIEW
+        </h2>
+
+        <p className="max-w-2xl text-neutral-600 leading-relaxed">
+          Vista rápida de los proyectos y conceptos para comprender el enfoque,
+          la metodología y el lenguaje detrás de cada propuesta.
+        </p>
+      </div>
+
+      {/* Tabla */}
+
+      <div className="max-w-[1130px] mx-auto border-b border-black"/>
+      <div className="max-w-[1130px] mx-auto">
+    
+
+        {/* Filas */}
+
+        {projects.map((project) => (
+          <ProjectRow
+            key={project.id}
+            project={project}
+            expanded={activeProject === project.id}
+            onToggle={() =>
+              setActiveProject(
+                activeProject === project.id
+                  ? null
+                  : project.id
+              )
+            }
+          />
+        ))}
+      </div>
+    </motion.section>
   );
 }

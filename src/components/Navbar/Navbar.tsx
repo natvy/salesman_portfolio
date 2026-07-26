@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useNavbarState } from "./useNavbarState";
 
 const Scrambled = localFont({
-  src: "../../fonts/Square.ttf",
+  src: "../../fonts/Geist.ttf",
   weight: "600",
   style: "normal",
 });

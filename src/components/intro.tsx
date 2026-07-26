@@ -1,13 +1,15 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
+import Logo from "../icons/logo.svg";
+
 interface IntroPageProps {
   onFinish: () => void;
 }
 
 export default function IntroPage({ onFinish }: IntroPageProps) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const logoRef = useRef<HTMLImageElement | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const logoRef = useRef<HTMLDivElement>(null);
   const ranRef = useRef(false);
 
   useEffect(() => {
@@ -16,14 +18,24 @@ export default function IntroPage({ onFinish }: IntroPageProps) {
 
     const container = containerRef.current;
     const logo = logoRef.current;
+
     if (!container || !logo) return;
 
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    const tl = gsap.timeline({
+      defaults: { ease: "power3.out" },
+    });
 
     tl.fromTo(
       logo,
-      { opacity: 0, scale: 0.9 },
-      { opacity: 1, scale: 1, duration: 0.8 }
+      {
+        opacity: 0,
+        scale: 0.9,
+      },
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 0.8,
+      }
     )
       .to(logo, {
         y: -200,
@@ -35,9 +47,7 @@ export default function IntroPage({ onFinish }: IntroPageProps) {
         duration: 0.5,
         pointerEvents: "none",
       })
-      .add(() => {
-        onFinish();
-      });
+      .add(onFinish);
 
     return () => {
       tl.kill();
@@ -47,14 +57,14 @@ export default function IntroPage({ onFinish }: IntroPageProps) {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-50 bg-white flex items-center justify-center"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-white"
     >
-      <img
+      <div
         ref={logoRef}
-        src="/logo.png"
-        alt="Logo"
         className="w-40 h-40 will-change-transform"
-      />
+      >
+        <Logo className="w-full h-full" />
+      </div>
     </div>
   );
 }
